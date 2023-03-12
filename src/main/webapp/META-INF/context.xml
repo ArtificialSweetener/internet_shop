@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <!-- Specify a JDBC datasource -->
+    <Resource name="jdbc/testpool"
+             auth="Container"
+             type="javax.sql.DataSource"
+             driverClassName="com.mysql.cj.jdbc.Driver"
+             username="root"
+             password="root"
+             url="jdbc:mysql://localhost:3306/my_shop"
+             validationQuery="select 1"
+            maxTotal="50" maxIdle="10" maxWaitMillis="30000" />
+            
+           
+  <Loader delegate="true"/>
+  <Classpath>
+    <Resource name="WEB-INF/classes"/>
+  </Classpath>
+
+</Context>
