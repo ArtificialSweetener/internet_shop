@@ -5,11 +5,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
-
+/**
+ * 
+ * 
+ * Class that represents product entity
+ * @author annak
+ *
+ */
 public class Product implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private long productId;
 	private String productName;
