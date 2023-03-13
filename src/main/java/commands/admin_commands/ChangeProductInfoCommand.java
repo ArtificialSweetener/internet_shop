@@ -22,16 +22,40 @@ import service.impl.ProductServiceImpl;
 import util.MessageAttributeUtil;
 import util.validators.InputValidator;
 
+/**
+ * This command class handles changing the information of a product in the
+ * system. It implements the ICommand interface and utilizes the ProductService
+ * to manage products. The class also utilizes the MessageAttributeUtil to set
+ * messages in the HttpServletRequest object.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 @MultipartConfig(maxFileSize = 16177215)
 public class ChangeProductInfoCommand implements ICommand {
 	private ProductService productService;
 	private static final Logger logger = LogManager.getLogger(ChangeProductInfoCommand.class);
 
+	/**
+	 * Constructs a new instance of the ChangeProductInfoCommand class. It
+	 * initializes a ProductDaoImpl object and uses it to create a new
+	 * ProductService object.
+	 */
 	public ChangeProductInfoCommand() {
 		ProductDao productDao = new ProductDaoImpl(ConnectionPoolManager.getInstance().getConnectionPool());
 		this.productService = new ProductServiceImpl(productDao);
 	}
 
+	/**
+	 * Updates the information of a product in the system.
+	 * 
+	 * @param req  the HttpServletRequest object containing information about the
+	 *             request
+	 * @param resp the HttpServletResponse object used to send the response
+	 * @return a String representing the target URL to redirect to after execution
+	 * 
+	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing ChangeProductInfoCommand");

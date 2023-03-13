@@ -18,15 +18,38 @@ import service.OrderService;
 import service.impl.OrderServiceImpl;
 import util.MessageAttributeUtil;
 
+/**
+ * The GetAllOrdersListCommand class implements ICommand interface and provides
+ * functionality to get all orders and display them on the admin orders page.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class GetAllOrdersListCommand implements ICommand {
 	private OrderService orderService;
 	private static final Logger logger = LogManager.getLogger(GetAllOrdersListCommand.class);
 
+	/**
+	 * Creates a new instance of the GetAllOrdersListCommand class with the default
+	 * OrderService.
+	 */
 	public GetAllOrdersListCommand() {
 		OrderDao orderDao = new OrderDaoImpl(ConnectionPoolManager.getInstance().getConnectionPool());
 		this.orderService = new OrderServiceImpl(orderDao);
 	}
 
+	/**
+	 * Executes the command to get all orders and display them on the admin orders
+	 * page.
+	 * 
+	 * @param req  the HttpServletRequest object containing the request the client
+	 *             has made of the servlet
+	 * @param resp the HttpServletResponse object containing the response the
+	 *             servlet sends to the client
+	 * 
+	 * @return the URL of the admin orders page
+	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing GetAllOrdersListCommand");

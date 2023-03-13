@@ -18,14 +18,33 @@ import service.UserService;
 import service.impl.UserServiceImpl;
 import util.MessageAttributeUtil;
 
+/**
+ * The UnblockUserCommand class is responsible for unblocking a user. Implements
+ * the ICommand interface.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class UnblockUserCommand implements ICommand {
 	private UserService userService;
 	private static final Logger logger = LogManager.getLogger(UnblockUserCommand.class);
 
+	/**
+	 * The constructor for the UnblockUserCommand class.
+	 */
 	public UnblockUserCommand() {
 		UserDao userDao = new UserDaoImpl(ConnectionPoolManager.getInstance().getConnectionPool());
 		this.userService = new UserServiceImpl(userDao);
 	}
+
+	/**
+	 * Executes the UnblockUserCommand by unblocking a user.
+	 * 
+	 * @param req  the HttpServletRequest object
+	 * @param resp the HttpServletResponse object
+	 * @return the target URL for the user
+	 */
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {

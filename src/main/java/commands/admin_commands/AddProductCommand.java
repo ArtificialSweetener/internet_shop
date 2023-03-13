@@ -23,18 +23,51 @@ import util.validators.FormValidator;
 import util.validators.InputValidator;
 import util.validators.impl.AddProductFormValidator;
 
+/**
+ * This class represents the command for adding a new product to the database.
+ * It implements the {@link ICommand} interface and overrides its
+ * {@link #execute(HttpServletRequest, HttpServletResponse)} method. Upon
+ * execution, the command reads the necessary parameters from the request,
+ * validates the form data using a {@link FormValidator}, creates a new
+ * {@link Product} object and adds it to the database using a
+ * {@link ProductService}.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
+
 @MultipartConfig(maxFileSize = 16177215)
 public class AddProductCommand implements ICommand {
 	private ProductService productService;
 	private FormValidator formValidator;
 	private static final Logger logger = LogManager.getLogger(AddProductCommand.class);
 
+	/**
+	 * Constructs a new AddProductCommand object and initializes its ProductService
+	 * and FormValidator fields. The ProductService is created using a
+	 * ProductDaoImpl object which is created with a ConnectionPool. The
+	 * FormValidator is created using an AddProductFormValidator object which in
+	 * turn uses an InputValidator.
+	 */
 	public AddProductCommand() {
 		ProductDao productDao = new ProductDaoImpl(ConnectionPoolManager.getInstance().getConnectionPool());
 		this.productService = new ProductServiceImpl(productDao);
 		this.formValidator = new AddProductFormValidator(InputValidator.getInstance());
 	}
 
+	/**
+	 * Executes the AddProductCommand. Reads the product data from the request,
+	 * validates the form data, creates a new Product object and adds it to the
+	 * database using the ProductService. If the form data is invalid or an error
+	 * occurs while adding the product to the database, an appropriate message is
+	 * set in the request attribute. Returns the target URL of the redirect after
+	 * the command is executed.
+	 *
+	 * @param req  the HttpServletRequest object
+	 * @param resp the HttpServletResponse object
+	 * @return the target URL of the redirect after the command is executed
+	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing AddProductCommand");

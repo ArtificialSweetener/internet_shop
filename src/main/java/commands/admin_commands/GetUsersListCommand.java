@@ -15,15 +15,39 @@ import service.UserService;
 import service.impl.UserServiceImpl;
 import util.MessageAttributeUtil;
 
+/**
+ * The GetUsersListCommand class implements the ICommand interface and provides
+ * functionality to get a list of all users and display them in the admin panel.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class GetUsersListCommand implements ICommand {
 	private UserService userService;
 	private static final Logger logger = LogManager.getLogger(GetUsersListCommand.class);
 
+	/**
+	 * Constructor of GetUsersListCommand class.
+	 * 
+	 * Initializes the UserService object.
+	 */
 	public GetUsersListCommand() {
 		UserDao userDao = new UserDaoImpl(ConnectionPoolManager.getInstance().getConnectionPool());
 		this.userService = new UserServiceImpl(userDao);
 	}
 
+	/**
+	 * Executes the command to get a list of all users and display them in the admin
+	 * panel.
+	 * 
+	 * @param req  The HttpServletRequest object containing the request from the
+	 *             client.
+	 * @param resp The HttpServletResponse object for the response to be sent to the
+	 *             client.
+	 * @return A String representing the URL of the admin panel's users page, or the
+	 *         URL of the error page if the user list is empty.
+	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing GetUsersListCommand");

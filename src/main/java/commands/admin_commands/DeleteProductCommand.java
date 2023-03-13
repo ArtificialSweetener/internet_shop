@@ -15,14 +15,41 @@ import service.ProductService;
 import service.impl.ProductServiceImpl;
 import util.MessageAttributeUtil;
 
+/**
+ * The DeleteProductCommand class implements the ICommand interface and
+ * represents a command that deletes a product from the database. It retrieves a
+ * product ID from the request parameters, uses it to delete the product through
+ * the ProductService object, and redirects to the product list page.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class DeleteProductCommand implements ICommand {
 	private ProductService productService;
 	private static final Logger logger = LogManager.getLogger(DeleteProductCommand.class);
 
+	/**
+	 * Constructs a new DeleteProductCommand object and initializes its
+	 * productService field by creating a ProductDaoImpl object and passing it to a
+	 * new ProductServiceImpl object.
+	 */
 	public DeleteProductCommand() {
 		ProductDao productDao = new ProductDaoImpl(ConnectionPoolManager.getInstance().getConnectionPool());
 		this.productService = new ProductServiceImpl(productDao);
 	}
+
+	/**
+	 * Executes this command by retrieving a product ID from the request parameters,
+	 * using it to delete the product through the ProductService object, and
+	 * redirecting to the product list page. If the product list is empty or a
+	 * product ID is not specified, an appropriate error message is set in the
+	 * request attributes and the user is redirected to the product list page.
+	 * 
+	 * @param req  the HttpServletRequest object containing the request parameters
+	 * @param resp the HttpServletResponse object used to redirect the user
+	 * @return a String representing the URL of the product list page
+	 */
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
