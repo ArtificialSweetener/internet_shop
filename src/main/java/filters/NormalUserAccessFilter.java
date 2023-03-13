@@ -31,14 +31,18 @@ public class NormalUserAccessFilter implements Filter {
 		System.out.println("Session is:  " + session);
 		System.out.println("user Role is:  " + session.getAttribute("role"));
 
-		if ((session == null || session.getAttribute("role") == null
-				|| !session.getAttribute("role").equals("normal"))) {
-			session.invalidate();
-			session = req.getSession();
-			System.out.println("Session invalidated");
-			MessageAttributeUtil.setMessageAttribute(req, "message.access_denied_not_logged_in_as_a_regular_user");
-			res.sendRedirect(contextPath + "/common_pages/login.jsp");
-			return;
+		if (session != null) {
+			if (session.getAttribute("role") != null) {
+				if (!session.getAttribute("role").equals("normal")) {
+					session.invalidate();
+					session = req.getSession();
+					System.out.println("Session invalidated");
+					MessageAttributeUtil.setMessageAttribute(req,
+							"message.access_denied_not_logged_in_as_a_regular_user");
+					res.sendRedirect(contextPath + "/common_pages/login.jsp");
+					return;
+				}
+			}
 		}
 		chain.doFilter(request, response);
 	}
