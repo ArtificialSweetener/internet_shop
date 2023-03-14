@@ -22,11 +22,24 @@ import service.ProductService;
 import service.impl.ItemServiceImpl;
 import service.impl.ProductServiceImpl;
 
+/**
+ * This class represents a command that retrieves all the items in a specific
+ * order and displays them to the user with pagination. The command implements
+ * the ICommand interface and requires the execute method to be implemented.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class GetAllOrderItemsCommand implements ICommand {
 	private ProductService productService;
 	private ItemService itemService;
 	private static final Logger logger = LogManager.getLogger(GetAllOrderItemsCommand.class);
 
+	/**
+	 * Constructs a new GetAllOrderItemsCommand object and initializes the
+	 * productService and itemService fields.
+	 */
 	public GetAllOrderItemsCommand() {
 		ProductDao productDao = new ProductDaoImpl(ConnectionPoolManager.getInstance().getConnectionPool());
 		this.productService = new ProductServiceImpl(productDao);
@@ -34,12 +47,23 @@ public class GetAllOrderItemsCommand implements ICommand {
 		this.itemService = new ItemServiceImpl(itemdao);
 	}
 
+	/**
+	 * Retrieves all the items in a specific order and displays them to the user
+	 * with pagination.
+	 *
+	 * @param req  The HttpServletRequest object that contains the request the
+	 *             client has made of the servlet.
+	 * @param resp The HttpServletResponse object that contains the response the
+	 *             servlet sends to the client.
+	 * @return A string that specifies the URL to which the user should be
+	 *         redirected after the command has been executed.
+	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing GetAllOrderItemsCommand");
-		
-		String targetUrl =  "/common_pages/order_items.jsp";
-	
+
+		String targetUrl = "/common_pages/order_items.jsp";
+
 		Optional<String> currentOrderId = Optional.ofNullable(req.getParameter("orderId"));
 		int page = 1;
 		int recordsPerPage = 3;

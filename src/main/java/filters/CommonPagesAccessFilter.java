@@ -14,9 +14,41 @@ import javax.servlet.http.HttpSession;
 
 import util.MessageAttributeUtil;
 
+/**
+ * The {@code CommonPagesAccessFilter} class is a servlet filter that checks if
+ * a user accessing common pages like the login and registration pages is logged
+ * in or not. If the user is logged in, the filter will redirect the user to
+ * their respective dashboard based on their role (normal or admin). If the user
+ * is not logged in, the filter will allow the request to proceed to the next
+ * filter in the chain. This class implements the {@link javax.servlet.Filter}
+ * interface and is annotated with the
+ * {@link javax.servlet.annotation.WebFilter} annotation to specify the URL
+ * pattern for the filter.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 @WebFilter(urlPatterns = { "/common_pages/login.jsp", "/common_pages/register.jsp" })
 public class CommonPagesAccessFilter implements Filter {
 
+	/**
+	 * Filters the request to check if a user accessing common pages is logged in or
+	 * not. If the user is logged in, the filter will redirect the user to their
+	 * respective dashboard based on their role (normal or admin). If the user is
+	 * not logged in, the filter will allow the request to proceed to the next
+	 * filter in the chain.
+	 * 
+	 * @param request  the {@link javax.servlet.ServletRequest} object that contains
+	 *                 the client's request.
+	 * @param response the {@link javax.servlet.ServletResponse} object that
+	 *                 contains the filter's response.
+	 * @param chain    the {@link javax.servlet.FilterChain} object that allows the
+	 *                 request to proceed to the next filter in the chain.
+	 * @throws IOException      if an I/O error occurs during the processing of the
+	 *                          request.
+	 * @throws ServletException if the request could not be processed.
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -36,13 +68,14 @@ public class CommonPagesAccessFilter implements Filter {
 				if (session.getAttribute("role").equals("normal")) {
 					System.out.println("Attribute is normal");
 					res.sendRedirect(contextPath + "/normal/normal.jsp");
-					return; 
+					return;
 				} else if (session.getAttribute("role").equals("admin")) {
 					System.out.println("Attribute is admin");
 					res.sendRedirect(contextPath + "/admin/admin.jsp");
-					return; 
+					return;
 				}
-			} 
-		}chain.doFilter(request, response);
+			}
+		}
+		chain.doFilter(request, response);
 	}
 }

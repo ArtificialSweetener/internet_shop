@@ -14,9 +14,33 @@ import javax.servlet.http.HttpSession;
 
 import util.MessageAttributeUtil;
 
+/**
+ * The NormalUserAccessFilter class is a filter that checks if the user
+ * accessing a specific URL has a "normal" role. If the user does not have the
+ * "normal" role, the filter invalidates the session and redirects the user to
+ * the login page with an error message.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 @WebFilter(urlPatterns = { "/normal/*" })
 public class NormalUserAccessFilter implements Filter {
-
+	/**
+	 * The doFilter method checks if the user accessing a specific URL has a
+	 * "normal" role. If the user does not have the "normal" role, the filter
+	 * invalidates the session and redirects the user to the login page with an
+	 * error message.
+	 * 
+	 * @param request  the ServletRequest object containing the client's request
+	 * @param response the ServletResponse object containing the filter's response
+	 * @param chain    the FilterChain object containing the filter chain
+	 * 
+	 * @throws IOException      if an input or output error occurs while the filter
+	 *                          is processing the request or response
+	 * @throws ServletException if the request or response could not be processed by
+	 *                          the filter
+	 */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {

@@ -22,10 +22,26 @@ import service.impl.UserSaltServiceImpl;
 import service.impl.UserServiceImpl;
 import util.MessageAttributeUtil;
 
+/**
+ * This class represents a Login Command that implements the ICommand interface.
+ * It retrieves the user email and password from the HTTP request object and
+ * uses the authenticationService to authenticate the user. If the
+ * authentication fails, the user is redirected to the login page with an error
+ * message, otherwise the user is redirected to their corresponding page
+ * (admin/normal) and their information is stored in the session object.
+ *
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class LoginCommand implements ICommand {
 	private AuthentificationService authenticationService;
 	private static final Logger logger = LogManager.getLogger(LoginCommand.class);
 
+	/**
+	 * Constructor that initializes the authenticationService with the necessary
+	 * services and DAOs.
+	 */
 	public LoginCommand() {
 		UserDao userDao = new UserDaoImpl(ConnectionPoolManager.getInstance().getConnectionPool());
 		UserService userService = new UserServiceImpl(userDao);
@@ -34,9 +50,19 @@ public class LoginCommand implements ICommand {
 		authenticationService = new AuthentificationServiceImpl(userService, userSaltService);
 	}
 
+	/**
+	 * Executes the login command by retrieving the user email and password from the
+	 * request, authenticating the user using the authenticationService and
+	 * redirecting them to their corresponding page. If the authentication fails,
+	 * the user is redirected to the login page with an error message.
+	 * 
+	 * @param req  the HTTP request object
+	 * @param resp the HTTP response object
+	 * @return the URL of the JSP page to which the user is redirected
+	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		System.out.println("Login Command works"); 
+		System.out.println("Login Command works");
 		logger.info("Executing LoginCommand");
 		String email = req.getParameter("user_email");
 		String password = req.getParameter("user_password");

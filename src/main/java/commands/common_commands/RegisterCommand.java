@@ -26,12 +26,24 @@ import util.validators.FormValidator;
 import util.validators.InputValidator;
 import util.validators.impl.RegisterFormValidator;
 
+/**
+ * The RegisterCommand class implements the ICommand interface and represents
+ * the command to register a new user in the system.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class RegisterCommand implements ICommand {
 	private UserService userService;
 	private UserSaltService userSaltService;
 	private FormValidator formValidator;
 	private static final Logger logger = LogManager.getLogger(RegisterCommand.class);
 
+	/**
+	 * Constructs a new RegisterCommand object and initializes the UserService,
+	 * UserSaltService and FormValidator instances.
+	 */
 	public RegisterCommand() {
 		UserDao userDao = new UserDaoImpl(ConnectionPoolManager.getInstance().getConnectionPool());
 		userService = new UserServiceImpl(userDao);
@@ -40,6 +52,16 @@ public class RegisterCommand implements ICommand {
 		this.formValidator = new RegisterFormValidator(InputValidator.getInstance());
 	}
 
+	/**
+	 * Executes the register command.
+	 * 
+	 * @param req  the HttpServletRequest object that contains the request the
+	 *             client has made of the servlet.
+	 * @param resp the HttpServletResponse object that contains the response the
+	 *             servlet sends to the client.
+	 * 
+	 * @return a string with the URL where the user will be redirected.
+	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing RegisterCommand");

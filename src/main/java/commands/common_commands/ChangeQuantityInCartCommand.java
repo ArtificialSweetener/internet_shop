@@ -13,12 +13,32 @@ import models.Cart;
 import util.MessageAttributeUtil;
 import util.validators.InputValidator;
 
+/**
+ * The ChangeQuantityInCartCommand class implements the ICommand interface and
+ * is responsible for changing the quantity of a product in the shopping cart of
+ * the current session based on the values of the "chosenProductId" and
+ * "buyAmount" parameters passed in the HttpServletRequest object. It also
+ * performs validation on the input values and sets an appropriate message in
+ * the request session before returning the target URL to redirect the user.
+ *
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class ChangeQuantityInCartCommand implements ICommand {
 	private static final Logger logger = LogManager.getLogger(ChangeQuantityInCartCommand.class);
 
 	public ChangeQuantityInCartCommand() {
 	}
 
+	/**
+	 * Executes the ChangeQuantityInCartCommand by changing the quantity of a
+	 * product in the shopping cart and redirecting the user to the cart page.
+	 * 
+	 * @param req  The HttpServletRequest object.
+	 * @param resp The HttpServletResponse object.
+	 * @return A string representing the URL of the cart page.
+	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing ChangeQuantityInCartCommand");
@@ -26,23 +46,23 @@ public class ChangeQuantityInCartCommand implements ICommand {
 		Optional<Object> chosenProductListOptional = Optional.ofNullable(req.getSession().getAttribute("cartList"));
 		String buyAmount = req.getParameter("buyAmount").trim();
 		String targetUrl = "/common_pages/cart.jsp";
-		
+
 		if (chosenProductId.isBlank()) {
-			MessageAttributeUtil.setMessageAttribute(req, "message.prod_not_chosen_cart_quantity_fail"); //done
+			MessageAttributeUtil.setMessageAttribute(req, "message.prod_not_chosen_cart_quantity_fail"); // done
 			return targetUrl;
 		} else if (chosenProductListOptional.isEmpty()) {
-			MessageAttributeUtil.setMessageAttribute(req, "message.cart_empty"); //done
+			MessageAttributeUtil.setMessageAttribute(req, "message.cart_empty"); // done
 			return targetUrl;
 		} else if (buyAmount.isBlank()) {
-			MessageAttributeUtil.setMessageAttribute(req, "message.quantity_not_specified"); //done
+			MessageAttributeUtil.setMessageAttribute(req, "message.quantity_not_specified"); // done
 			return targetUrl;
 		} else if (Integer.parseInt(buyAmount) == 0) {
-			MessageAttributeUtil.setMessageAttribute(req, "message.quantity_not_zero"); //done
+			MessageAttributeUtil.setMessageAttribute(req, "message.quantity_not_zero"); // done
 			return targetUrl;
-		} else if (!InputValidator.getInstance().isNumberValid(buyAmount)){
-			MessageAttributeUtil.setMessageAttribute(req, "message.quantity_not_valid"); //done
+		} else if (!InputValidator.getInstance().isNumberValid(buyAmount)) {
+			MessageAttributeUtil.setMessageAttribute(req, "message.quantity_not_valid"); // done
 			return targetUrl;
-		}else {
+		} else {
 			long id = Long.parseLong(chosenProductId);
 			@SuppressWarnings("unchecked")
 			List<Cart> listChange = (List<Cart>) chosenProductListOptional.get();

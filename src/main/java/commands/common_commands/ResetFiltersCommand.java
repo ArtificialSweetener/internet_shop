@@ -27,12 +27,28 @@ import service.impl.ColorServiceImpl;
 import service.impl.ProductServiceImpl;
 import util.MessageAttributeUtil;
 
+/**
+ * ResetFiltersCommand class implements the ICommand interface and represents
+ * the command to reset the filters applied on the products page. This command
+ * removes the filter criteria that were applied on the products page, retrieves
+ * the list of products based on the default filter criteria, and sets the
+ * necessary attributes on the request object for rendering the page.
+ *
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class ResetFiltersCommand implements ICommand {
 	private ProductService productService;
 	private CategoryService categoryService;
 	private ColorService colorService;
 	private static final Logger logger = LogManager.getLogger(ResetFiltersCommand.class);
 
+	/**
+	 * Constructs a new ResetFiltersCommand object by creating instances of
+	 * CategoryService, ProductService, and ColorService using their respective DAO
+	 * implementations.
+	 */
 	public ResetFiltersCommand() {
 		CategoryDao categoryDao = new CategoryDaoImpl(ConnectionPoolManager.getInstance().getConnectionPool());
 		this.categoryService = new CategoryServiceImpl(categoryDao);
@@ -42,6 +58,14 @@ public class ResetFiltersCommand implements ICommand {
 		this.colorService = new ColorServiceImpl(colorDao);
 	}
 
+	/**
+	 * Executes the command to reset the filters applied on the products page.
+	 * 
+	 * @param req  The HttpServletRequest object containing the request parameters
+	 *             and attributes.
+	 * @param resp The HttpServletResponse object for sending the response.
+	 * @return The target URL to forward to after executing the command.
+	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing ResetFiltersCommand");

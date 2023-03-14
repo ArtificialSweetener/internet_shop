@@ -12,9 +12,29 @@ import commands.icommand.ICommand;
 import models.Cart;
 import util.MessageAttributeUtil;
 
+/**
+ * A command class that retrieves the cart list from the session and calculates
+ * the total price of the items in the cart. It sets the cart list and total
+ * price as attributes in the request session, and returns the URL of the cart
+ * page.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class GetCartListCommand implements ICommand {
 	private static final Logger logger = LogManager.getLogger(GetCartListCommand.class);
 
+	/**
+	 * Executes the command by retrieving the cart list from the session and
+	 * calculating the total price of the items in the cart. It sets the cart list
+	 * and total price as attributes in the request session, and returns the URL of
+	 * the cart page.
+	 * 
+	 * @param req  the HttpServletRequest object
+	 * @param resp the HttpServletResponse object
+	 * @return the URL of the cart page
+	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing GetCartListCommand");

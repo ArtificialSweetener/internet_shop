@@ -18,17 +18,48 @@ import service.OrderService;
 import service.impl.OrderServiceImpl;
 import util.MessageAttributeUtil;
 
+/**
+ * The GetUserOrdersListCommand class implements the ICommand interface and
+ * represents the command to retrieve a list of orders for the current user.
+ * 
+ * This command retrieves the current user from the session, retrieves the list
+ * of orders for that user from the database using the OrderService, and sets
+ * the necessary attributes on the request object for rendering the
+ * orders_user.jsp page in case of success or login.jsp page in case of failure.
+ * 
+ * Pagination is also implemented, with a default of 3 records per page.
+ *
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class GetUserOrdersListCommand implements ICommand {
 
 	private OrderService orderService;
 	private static final Logger logger = LogManager.getLogger(GetUserOrdersListCommand.class);
 
+	/**
+	 * Constructs a new GetUserOrdersListCommand object. Initializes the
+	 * OrderService object by creating a new OrderDaoImpl object using the
+	 * connection pool.
+	 */
 	public GetUserOrdersListCommand() {
 		OrderDao orderDao = new OrderDaoImpl(ConnectionPoolManager.getInstance().getConnectionPool());
 		this.orderService = new OrderServiceImpl(orderDao);
 	}
 
-//do pagination here
+	/**
+	 * Retrieves a list of orders for the current user and sets the necessary
+	 * attributes on the request object for rendering the orders_user.jsp page in
+	 * case of success or login.jsp page in case of failure. Pagination is also
+	 * implemented, with a default of 3 records per page.
+	 * 
+	 * @param req  The HttpServletRequest object containing the request parameters
+	 *             and attributes.
+	 * @param resp The HttpServletResponse object used for sending the response to
+	 *             the client.
+	 * @return A String representing the target URL for the page to be rendered.
+	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing GetUserOrdersListCommand");
@@ -44,8 +75,8 @@ public class GetUserOrdersListCommand implements ICommand {
 		User user = null;
 		if (currentUserOptional.isPresent()) {
 			user = (User) currentUserOptional.get();
-			List<Order> orderList = orderService.getAllOrdersByUserId(user.getUserId(),
-					(page - 1) * recordsPerPage, recordsPerPage);
+			List<Order> orderList = orderService.getAllOrdersByUserId(user.getUserId(), (page - 1) * recordsPerPage,
+					recordsPerPage);
 			if (orderList.isEmpty()) {
 				MessageAttributeUtil.setMessageAttribute(req, "message.order_list_empty");
 				return targetUrl;

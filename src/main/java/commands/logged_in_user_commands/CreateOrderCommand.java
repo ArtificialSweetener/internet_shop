@@ -29,12 +29,31 @@ import util.validators.FormValidator;
 import util.validators.InputValidator;
 import util.validators.impl.CreateOrderFormValidator;
 
+/**
+ * The CreateOrderCommand class implements the ICommand interface and represents
+ * the command to create a new order based on the items in the cart and user's
+ * order details. This command is responsible for validating the user's input,
+ * creating a new order object and inserting it into the database, as well as
+ * inserting the items in the order into the database. It also removes the cart
+ * from the user's session and sets the necessary attributes on the request
+ * object for rendering the normal.jsp page in case of success or checkout.jsp
+ * page in case of failure.
+ *
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class CreateOrderCommand implements ICommand {
 	private OrderService orderService;
 	private ItemService itemService;
 	private FormValidator formValidator;
 	private static final Logger logger = LogManager.getLogger(CreateOrderCommand.class);
 
+	/**
+	 * Constructor of the CreateOrderCommand class. Initializes the orderService,
+	 * itemService, and formValidator objects using the DAO implementations and
+	 * ConnectionPoolManager to interact with the database.
+	 */
 	public CreateOrderCommand() {
 		OrderDao orderDao = new OrderDaoImpl(ConnectionPoolManager.getInstance().getConnectionPool());
 		this.orderService = new OrderServiceImpl(orderDao);
@@ -43,6 +62,18 @@ public class CreateOrderCommand implements ICommand {
 		this.formValidator = new CreateOrderFormValidator(InputValidator.getInstance());
 	}
 
+	/**
+	 * Executes the CreateOrderCommand. Validates the user's input, creates a new
+	 * order object and inserts it into the database, as well as inserting the items
+	 * in the order into the database. Also removes the cart from the user's session
+	 * and sets the necessary attributes on the request object for rendering the
+	 * normal.jsp page in case of success or checkout.jsp page in case of failure.
+	 * 
+	 * @param req  The HttpServletRequest object containing the request information.
+	 * @param resp The HttpServletResponse object containing the response
+	 *             information.
+	 * @return A String representing the URL of the page to be rendered.
+	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing CreateOrderCommand");
