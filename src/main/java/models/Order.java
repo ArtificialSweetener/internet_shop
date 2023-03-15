@@ -4,10 +4,18 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * The Order class represents an order made by a user. It contains information
+ * such as the user id, order date and time, delivery address, phone number, and
+ * order status. An order can contain multiple items, which are represented by
+ * the Item class.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ * 
+ */
 public class Order implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private long id;
 	private long userId;

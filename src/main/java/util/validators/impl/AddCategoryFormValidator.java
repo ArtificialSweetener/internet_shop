@@ -9,6 +9,15 @@ import util.MessageAttributeUtil;
 import util.validators.FormValidator;
 import util.validators.InputValidator;
 
+/**
+ * The AddCategoryFormValidator class is responsible for validating the form
+ * data submitted for adding a new category to the system. It implements the
+ * FormValidator interface.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class AddCategoryFormValidator implements FormValidator {
 	private InputValidator inputValidator;
 
@@ -16,6 +25,12 @@ public class AddCategoryFormValidator implements FormValidator {
 		this.inputValidator = inputValidator;
 	}
 
+	/**
+	 * Validates the form data submitted for adding a new category to the system.
+	 * 
+	 * @param req The HTTP servlet request containing the form data.
+	 * @return true if the form data is valid, false otherwise.
+	 */
 	@Override
 	public boolean validate(HttpServletRequest req) {
 		String categoryTitle = req.getParameter("catTitle").trim();

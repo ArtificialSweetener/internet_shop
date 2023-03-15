@@ -9,6 +9,15 @@ import util.MessageAttributeUtil;
 import util.validators.FormValidator;
 import util.validators.InputValidator;
 
+/**
+ * This class is responsible for validating the add product form submitted by
+ * the user. It implements the FormValidator interface and validates the form by
+ * using an InputValidator object.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class AddProductFormValidator implements FormValidator {
 	private InputValidator inputValidator;
 
@@ -16,6 +25,12 @@ public class AddProductFormValidator implements FormValidator {
 		this.inputValidator = inputValidator;
 	}
 
+	/**
+	 * Validates the add product form submitted by the user.
+	 * 
+	 * @param req the HttpServletRequest object containing the form data
+	 * @return true if the form is valid, false otherwise
+	 */
 	@Override
 	public boolean validate(HttpServletRequest req) {
 		String productName = req.getParameter("pName").trim();

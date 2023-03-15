@@ -2,10 +2,19 @@ package models;
 
 import java.io.Serializable;
 
-public class Item implements Serializable{
-	/**
-	 * 
-	 */
+/**
+ * The Item class represents an item in an order. It contains information about
+ * the product, quantity, price, and the order it belongs to. This class
+ * implements the Serializable interface to allow objects of this class to be
+ * serialized.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
+
+public class Item implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	private long id;
 	private long productId;

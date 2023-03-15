@@ -4,7 +4,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Category implements Serializable{
+/**
+ * The Category class represents a category of products in a simple e-commerce
+ * system. It implements the Serializable interface for object serialization.
+ * The Category class has properties for the category ID, title, description,
+ * and a list of products in the category.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ * @see Serializable
+ * @see Product
+ */
+public class Category implements Serializable {
 
 	/**
 	 * 

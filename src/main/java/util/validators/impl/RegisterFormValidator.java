@@ -9,13 +9,44 @@ import util.MessageAttributeUtil;
 import util.validators.FormValidator;
 import util.validators.InputValidator;
 
+/**
+ * This class is responsible for validating the user registration form fields.
+ * It implements the FormValidator interface, which requires the implementation
+ * of the validate() method. The class receives an instance of an InputValidator
+ * through its constructor, which is used to perform the validation of the input
+ * values. If any of the fields is not valid, a list of message keys is created
+ * and stored in the request attribute using the MessageAttributeUtil class, and
+ * the method returns false. Otherwise, the method returns true.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
+
 public class RegisterFormValidator implements FormValidator {
 	private InputValidator inputValidator;
 
+	/**
+	 * Constructs a RegisterFormValidator object with the given InputValidator
+	 * instance
+	 * 
+	 * @param inputValidator the input validator to be used to validate the form
+	 *                       fields
+	 */
 	public RegisterFormValidator(InputValidator inputValidator) {
 		this.inputValidator = inputValidator;
 	}
 
+	/**
+	 * Validates the user registration form fields using the InputValidator
+	 * instance. If any of the fields is not valid, a list of message keys is
+	 * created and stored in the request attribute using the MessageAttributeUtil
+	 * class, and the method returns false. Otherwise, the method returns true.
+	 * 
+	 * @param req the HttpServletRequest object that contains the parameters of the
+	 *            form fields to be validated
+	 * @return true if all fields are valid, false otherwise
+	 */
 	@Override
 	public boolean validate(HttpServletRequest req) {
 		String userName = req.getParameter("user_name").trim();

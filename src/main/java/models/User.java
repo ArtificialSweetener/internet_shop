@@ -2,7 +2,20 @@ package models;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
+/**
+ * The User class represents a user object that contains information about a
+ * user such as their ID, name, surname, email, password, user type and whether
+ * or not the user is blocked. This class provides getters and setters for all
+ * attributes, as well as constructors to initialize an object of this class.
+ * The class also overrides the toString method to provide a string
+ * representation of the object.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ * 
+ */
+public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private long userId;
@@ -12,7 +25,6 @@ public class User implements Serializable{
 	private String userPassword;
 	private String userType;
 	private boolean is_bloked;
-	
 
 	public User(long userId, String userName, String userSurname, String userEmail, String userPassword,
 			String userType) {

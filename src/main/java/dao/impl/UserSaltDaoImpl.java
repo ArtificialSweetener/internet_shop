@@ -1,5 +1,13 @@
 package dao.impl;
 
+/**
+ * Implementation of the UserSaltDao interface which provides CRUD (create, read, update, delete)
+ * operations for UserSalt objects in a database. This implementation uses JDBC to interact with
+ * the database and a ConnectionPool to manage connections.
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+*/
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +33,13 @@ public class UserSaltDaoImpl implements UserSaltDao {
 		this.connectionPool = connectionPool;
 	}
 
+	/**
+	 * Creates a new UserSalt in the database with the given information.
+	 *
+	 * @param userSalt the UserSalt to create
+	 * @return the UserSalt that was created
+	 * @throws DataProcessingException if there is an error creating the UserSalt
+	 */
 	@Override
 	public UserSalt create(UserSalt userSalt) {
 		logger.info("method create(UserSalt userSalt) of UserSaltDaoImpl class is invoked");
@@ -47,6 +62,14 @@ public class UserSaltDaoImpl implements UserSaltDao {
 		return userSalt;
 	}
 
+	/**
+	 * Retrieves the UserSalt with the given user_id from the database.
+	 *
+	 * @param id the user_id to search for
+	 * @return an Optional containing the UserSalt if one was found, or an empty
+	 *         Optional if not
+	 * @throws DataProcessingException if there is an error retrieving the UserSalt
+	 */
 	@Override
 	public Optional<UserSalt> getSaltByUserId(Long id) {
 		logger.info("method getSaltByUserId(Long id) of UserSaltDaoImpl class is invoked");
@@ -95,6 +118,13 @@ public class UserSaltDaoImpl implements UserSaltDao {
 		return false;
 	}
 
+	/**
+	 * Parses a UserSalt object from the given ResultSet.
+	 * 
+	 * @param resultSet the ResultSet from which to parse the UserSalt object.
+	 * @return a UserSalt object parsed from the ResultSet.
+	 * @throws SQLException if there is an error accessing the ResultSet.
+	 */
 	private UserSalt parseUserSaltFromResultSet(ResultSet resultSet) throws SQLException {
 		logger.info("method parseItemFromResultSet(ResultSet resultSet) of ItemDaoImpl class is invoked");
 		UserSalt userSalt = null;

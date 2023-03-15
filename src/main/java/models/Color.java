@@ -2,6 +2,15 @@ package models;
 
 import java.io.Serializable;
 
+/**
+ * The Color class represents a color entity, which has a unique identifier and
+ * a name. It implements the Serializable interface to enable serialization and
+ * deserialization of the object.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class Color implements Serializable {
 	/**
 	 * 

@@ -17,6 +17,15 @@ import org.apache.logging.log4j.Logger;
 
 import org.apache.logging.log4j.LogManager;
 
+/**
+ * This class implements UserDao interface and provides functionality to perform
+ * CRUD operations on User object. It uses JDBC and MySQL database.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
+
 public class UserDaoImpl implements UserDao {
 	private int noOfRecords;
 	private ConnectionPool connectionPool;
@@ -27,10 +36,22 @@ public class UserDaoImpl implements UserDao {
 		this.connectionPool = connectionPool;
 	}
 
+	/**
+	 * Gets the number of records.
+	 *
+	 * @return the number of records
+	 */
 	public int getNoOfRecords() {
 		return noOfRecords;
 	}
 
+	/**
+	 * Creates the specified user in the database.
+	 *
+	 * @param user the user to be created
+	 * @return the created user
+	 * @throws DataProcessingException if there is an error while creating the user
+	 */
 	@Override
 	public User create(User user) {
 		logger.info("method create of UserDaoImpl class is invoked");
@@ -56,6 +77,14 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
+	/**
+	 * Gets the specified user from the database by ID.
+	 *
+	 * @param id the ID of the user to get
+	 * @return an Optional containing the user if found, or an empty Optional
+	 *         otherwise
+	 * @throws DataProcessingException if there is an error while getting the user
+	 */
 	@Override
 	public Optional<User> get(Long id) {
 		logger.info("method get of UserDaoImpl class is invoked");
@@ -80,6 +109,16 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
+	/**
+	 * Gets a list of User objects from the database, starting from the given offset
+	 * and returning up to noOfRecords records.
+	 *
+	 * @param offset      the starting index of the records to return
+	 * @param noOfRecords the maximum number of records to return
+	 * @return a List of User objects
+	 * @throws DataProcessingException if there is an error while retrieving the
+	 *                                 users
+	 */
 	@Override
 	public List<User> getAll(int offset, int noOfRecords) {
 		logger.info("method getAll of UserDaoImpl class is invoked");
@@ -104,6 +143,13 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
+	/**
+	 * Updates the specified User object in the database.
+	 *
+	 * @param user the User object to be updated
+	 * @return the updated User object
+	 * @throws DataProcessingException if there is an error while updating the user
+	 */
 	@Override
 	public User update(User user) {
 		logger.info("method update of UserDaoImpl class is invoked");
@@ -128,6 +174,13 @@ public class UserDaoImpl implements UserDao {
 		return user;
 	}
 
+	/**
+	 * Deletes the User object with the specified ID from the database.
+	 *
+	 * @param id the ID of the User object to be deleted
+	 * @return true if the User object was deleted, false otherwise
+	 * @throws DataProcessingException if there is an error while deleting the user
+	 */
 	@Override
 	public boolean delete(Long id) {
 		logger.info("method delete of UserDaoImpl class is invoked");
@@ -144,11 +197,19 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
+	/**
+	 * Finds the User object with the specified email address in the database.
+	 *
+	 * @param email the email address of the User object to be found
+	 * @return an Optional containing the User object if found, or an empty Optional
+	 *         otherwise
+	 * @throws DataProcessingException if there is an error while finding the user
+	 */
 	@Override
 	public Optional<User> findByEmail(String email) {
 		logger.info("method findByEmail of UserDaoImpl class is invoked");
 		String query = "SELECT * FROM users WHERE user_email = ? AND is_blocked = FALSE";
-		//System.out.println("findByEmail:" + connection);
+		// System.out.println("findByEmail:" + connection);
 		try (Connection connection = connectionPool.getConnection();
 				PreparedStatement getUserStatement = connection.prepareStatement(query)) {
 			System.out.println("Check if we got connection:" + connection);
@@ -172,9 +233,16 @@ public class UserDaoImpl implements UserDao {
 		} catch (SQLException | RuntimeException e) {
 			logger.error("Error while finding user by email: {}", email, e);
 			throw new DataProcessingException("Couldn't get user by email " + email, e);
-		} 
+		}
 	}
 
+	/**
+	 * Parses a ResultSet object into a User object.
+	 *
+	 * @param resultSet the ResultSet object to be parsed
+	 * @return a User object parsed from the ResultSet
+	 * @throws SQLException if there is an error while parsing the ResultSet
+	 */
 	private User parseUserFromResultSet(ResultSet resultSet) throws SQLException {
 		logger.info("method parseUserFromResultSet of UserDaoImpl class is invoked");
 		long userId = resultSet.getLong("id");

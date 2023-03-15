@@ -5,13 +5,22 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
+
 /**
+ * The Product class represents a product in the inventory of a store. It
+ * contains information such as the product's ID, name, description, color,
+ * category, price, quantity, date, time, photo, photo name, and a flag
+ * indicating whether the product has been marked as deleted. It also includes
+ * methods for accessing and modifying these attributes, as well as a method for
+ * retrieving the product's date and time as a LocalDateTime object.
+ * Additionally, it implements the Serializable interface, allowing instances of
+ * this class to be easily serialized and deserialized.
  * 
- * 
- * Class that represents product entity
  * @author annak
- *
+ * @version 1.0
+ * @since 2023-03-13
  */
+
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long productId;
@@ -23,7 +32,7 @@ public class Product implements Serializable {
 	private int productQuantity;
 	private LocalDate productDate;
 	private LocalTime productTime;
-	// we should store file in product
+
 	private byte[] productPhoto;
 	private String productPhotoName;
 	private int isdeleted;

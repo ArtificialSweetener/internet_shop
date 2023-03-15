@@ -2,6 +2,15 @@ package models;
 
 import java.io.Serializable;
 
+/**
+ * UserSalt represents a user's salt, which is used in password hashing to add
+ * an extra layer of security. This class is Serializable, meaning that it can
+ * be saved and restored across different Java Virtual Machines.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class UserSalt implements Serializable {
 	/**
 	 * 
