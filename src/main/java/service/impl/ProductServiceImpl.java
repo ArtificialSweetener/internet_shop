@@ -3,7 +3,6 @@ package service.impl;
 import java.util.List;
 import java.util.Optional;
 import dao.ProductDao;
-import models.Cart;
 import models.Product;
 
 import service.ProductService;
@@ -50,12 +49,6 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public double getMaxPrice() {
 		return productDao.getMaxPrice();
-	}
-
-	@Override
-	public List<Cart> getCartProduct(List<Cart> cartList) {
-		// TODO Auto-generated method stub
-		return productDao.getCartProduct(cartList);
 	}
 
 	@Override

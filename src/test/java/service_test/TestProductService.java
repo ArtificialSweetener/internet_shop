@@ -4,11 +4,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import dao.ProductDao;
-import models.Cart;
 import models.Product;
 import service.ProductService;
 import service.impl.ProductServiceImpl;
@@ -172,16 +170,6 @@ public class TestProductService { // refactor and add methods ??
 		double actualMaxPrice = productService.getMaxPrice();
 
 		assertEquals(expectedMaxPrice, actualMaxPrice, 0.001);
-	}
-
-	@Test
-	public void testGetCartProduct() {
-		List<Cart> expectedResult = new ArrayList<>();
-
-		when(productDao.getCartProduct(anyList())).thenReturn(expectedResult);
-		List<Cart> actualResult = productService.getCartProduct(new ArrayList<>());
-		assertEquals(expectedResult, actualResult);
-		Mockito.verify(productDao).getCartProduct(anyList());
 	}
 
 	@Test

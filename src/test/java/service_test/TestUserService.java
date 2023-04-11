@@ -21,7 +21,8 @@ public class TestUserService { // done
     @Mock
     private UserService mockUserService;
 
-    @Before
+    @SuppressWarnings("deprecation")
+	@Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
     }

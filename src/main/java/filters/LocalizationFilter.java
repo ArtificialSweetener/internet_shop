@@ -8,7 +8,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
+//import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,7 +32,7 @@ import org.apache.logging.log4j.Logger;
  * @since 2023-03-13
  */
 
-@WebFilter(urlPatterns = { "/*" })
+//@WebFilter(urlPatterns = { "/*" })
 public class LocalizationFilter implements Filter {
 	private static final Logger logger = LogManager.getLogger(LocalizationFilter.class);
 

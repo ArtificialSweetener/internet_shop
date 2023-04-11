@@ -12,6 +12,12 @@
 		class="card-img-top" alt="${product.getProductPhotoName()}" />
 	<div class="card-body d-flex flex-column">
 		<h5 class="card-title">${product.getProductName()}</h5>
+		<c:if test="${product.getProductQuantity() == 0}">
+			<h6 class="card-subtitle mb-2 text-muted">Out of stock</h6>
+		</c:if>
+		<c:if test="${product.getProductQuantity() > 0}">
+			<h6 class="card-subtitle mb-2 text-muted">In stock</h6>
+		</c:if>
 		<p class="card-text">${product.getProductDescription()}</p>
 		<c:forEach items="${categoryList}" var="category">
 			<c:if test="${category.getCategoryId() == product.getCategoryId()}">
@@ -40,16 +46,26 @@
 				<input type="hidden" id="command" name="command" value="ADD_TO_CART">
 				<input type="hidden" id="productId" name="productId"
 					value="${product.getProductId()}">
-				<button type="submit" id="add_to_cart"
-					class="btn mt-auto btn btn-primary">
-					<fmt:message key="label.addtocart" />
-				</button>
+
+				<c:if test="${product.getProductQuantity() == 0}">
+					<button type="submit" id="add_to_cart"
+						class="btn mt-auto btn btn-primary" disabled>
+						<fmt:message key="label.addtocart" />
+					</button>
+				</c:if>
+				<c:if test="${product.getProductQuantity() > 0}">
+					<button type="submit" id="add_to_cart"
+						class="btn mt-auto btn btn-primary">
+						<fmt:message key="label.addtocart" />
+					</button>
+				</c:if>
 			</form>
 
 		</c:if>
 
 		<c:if test="${current_user.getUserType().equals('admin')}">
-			<form style="margin-top: 1em;" action="/MyInternetShop/FrontController" method="get">
+			<form style="margin-top: 1em;"
+				action="/MyInternetShop/FrontController" method="get">
 				<input type="hidden" id="command" name="command"
 					value="GET_PRODUCT_TO_CHANGE"> <input type="hidden"
 					id="productid" name="productId" value="${product.getProductId()}">
@@ -58,7 +74,8 @@
 				</button>
 			</form>
 
-			<form style="margin-top: 1em;" action="/MyInternetShop/FrontController" method="post">
+			<form style="margin-top: 1em;"
+				action="/MyInternetShop/FrontController" method="post">
 				<input type="hidden" id="command" name="command"
 					value="DELETE_PRODUCT"> <input type="hidden" id="productId"
 					name="productId" value="${product.getProductId()}">

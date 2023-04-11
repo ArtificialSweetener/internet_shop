@@ -15,9 +15,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
+	rel="stylesheet">
+<!-- integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous"-->
 <style>
 @import
 	url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
@@ -375,11 +375,13 @@ img {
 
 			<c:if test="${current_user == null}">
 				<a href="common_pages/login.jsp"><fmt:message key="label.login" /></a>
-				<a href="common_pages/register.jsp"><fmt:message key="label.register" /></a>
+				<a href="common_pages/register.jsp"><fmt:message
+						key="label.register" /></a>
 			</c:if>
 
 			<c:if test="${current_user.getUserType().equals('admin')}">
-				<a href="admin/admin.jsp"><c:out value="${current_user.getUserName()}" /></a>
+				<a href="admin/admin.jsp"><c:out
+						value="${current_user.getUserName()}" /></a>
 				<form action="/MyInternetShop/FrontController" method="get">
 					<input type="hidden" id="command" name="command" value="LOGOUT">
 					<button type="submit" class=" btn btn-link">
@@ -403,20 +405,24 @@ img {
 	</div>
 	<div class="card">
 		<div class="card-body">
-			<h1><fmt:message key="label.welcometomyshop" /></h1>
+			<h1>
+				<fmt:message key="label.welcometomyshop" />
+			</h1>
 		</div>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js">
+		<!--integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"-->
+	</script>
 	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
-		integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-		crossorigin="anonymous"></script>
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js">
+	<!--integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+		crossorigin="anonymous"--></script>
 	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
-		integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
-		crossorigin="anonymous"></script>
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js">
+	<!--integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+		crossorigin="anonymous"--></script>
 </body>
 </html>
 

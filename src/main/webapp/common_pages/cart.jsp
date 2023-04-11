@@ -191,8 +191,8 @@ body {
 			<form action="/MyInternetShop/FrontController" method="post">
 				<input type="hidden" id="command" name="command"
 					value="CHANGE_LANGUAGE"> <input type="hidden" id="command"
-					name="pageName" value="common_pages/cart.jsp"> <select id="language"
-					name="language" onchange="submit()">
+					name="pageName" value="common_pages/cart.jsp"> <select
+					id="language" name="language" onchange="submit()">
 					<option><fmt:message key="label.lang_select" /></option>
 					<option value="en"><fmt:message key="label.lang_en" /></option>
 					<option value="ua"><fmt:message key="label.lang_ua" /></option>
@@ -214,7 +214,8 @@ body {
 			</c:if>
 
 			<c:if test="${current_user.getUserType().equals('admin')}">
-				<a href="../admin/admin.jsp"><c:out value="${current_user.getUserName()}" /></a>
+				<a href="../admin/admin.jsp"><c:out
+						value="${current_user.getUserName()}" /></a>
 
 				<form action="/MyInternetShop/FrontController" method="get">
 					<input type="hidden" id="command" name="command" value="LOGOUT">
@@ -249,7 +250,7 @@ body {
 				<div class="row">
 					<h1 class="text-left pt-3 pb-3">
 						<fmt:message key="label.totalpriceincart" />
-						: ${totalPrice} &#8372;
+						: ${cart.getTotalPrice()} &#8372;
 					</h1>
 					<table class="table table-striped table-hover">
 						<thead>
@@ -266,7 +267,8 @@ body {
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${cartList}" var="chosenProduct">
+							<c:forEach items="${cart.getProducts()}" var="entry">
+								<c:set var="chosenProduct" value="${entry.key}" />
 								<tr>
 									<th scope="row"></th>
 									<td>${chosenProduct.getProductName()}</td>
@@ -280,7 +282,7 @@ body {
 
 									<td>${chosenProduct.getProductPrice()}</td>
 
-									<td>${chosenProduct.getQuantityInCart()}</td>
+									<td>${cart.getProductQuantity(chosenProduct)}</td>
 
 
 									<td><form style="margin-top: 1em;"
@@ -288,7 +290,7 @@ body {
 											<input type="hidden" id="command" name="command"
 												value="CHANGE_QUANTITY_IN_CART"> <input
 												type="number" class="textAreaStyle cust_input mt-3"
-												placeholder="1" name="buyAmount" required></input> <input
+												placeholder="1" name="quantity" required></input> <input
 												type="hidden" id="productId" name="chosenProductId"
 												value="${chosenProduct.getProductId()}">
 											<button type="submit" id="delete" class="btn btn-danger">
@@ -296,11 +298,11 @@ body {
 											</button>
 										</form></td>
 
-									<td>${chosenProduct.getTotalPrice()}</td>
+									<td>${cart.getProductTotalPrice(chosenProduct)}</td>
 
 									<td>
-										<form style="margin-top: 1em;" action="/MyInternetShop/FrontController"
-											method="get">
+										<form style="margin-top: 1em;"
+											action="/MyInternetShop/FrontController" method="get">
 											<input type="hidden" id="command" name="command"
 												value="DELETE_FROM_CART"> <input type="hidden"
 												id="productId" name="chosenProductId"
@@ -319,12 +321,12 @@ body {
 
 
 					<c:if
-						test="${cartList == null || cartList.size() == 0 || current_user == null}">
+						test="${cart == null || cart.getProducts().size() == 0 || current_user == null}">
 						<button type="submit" id="order" class="btn btn-primary" disabled>
 							<fmt:message key="label.placeanorder" />
 						</button>
 					</c:if>
-					<c:if test="${cartList.size() > 0 && current_user != null}">
+					<c:if test="${cart.getProducts().size() > 0 && current_user != null}">
 						<a class="btn btn-primary" type="submit" id="order"
 							href="../normal/checkout.jsp" role="button"><fmt:message
 								key="label.placeanorder" /></a>

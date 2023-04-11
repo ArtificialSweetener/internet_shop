@@ -2,7 +2,6 @@ package service;
 
 import java.util.List;
 import java.util.Optional;
-import models.Cart;
 import models.Product;
 
 public interface ProductService extends GenericService<Product> {
@@ -10,7 +9,7 @@ public interface ProductService extends GenericService<Product> {
 
 	double getMaxPrice();
 
-	List<Cart> getCartProduct(List<Cart> cartList);
+	//List<Cart> getCartProduct(List<Cart> cartList);
 
 	List<Product> getAll(int offset, int noOfRecords);
 

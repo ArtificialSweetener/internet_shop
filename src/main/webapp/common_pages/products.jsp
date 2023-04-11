@@ -357,8 +357,8 @@ img {
 			<form action="/MyInternetShop/FrontController" method="post">
 				<input type="hidden" id="command" name="command"
 					value="CHANGE_LANGUAGE"> <input type="hidden" id="command"
-					name="pageName" value="common_pages/products.jsp"> <select id="language"
-					name="language" onchange="submit()">
+					name="pageName" value="common_pages/products.jsp"> <select
+					id="language" name="language" onchange="submit()">
 					<option><fmt:message key="label.lang_select" /></option>
 					<option value="en"><fmt:message key="label.lang_en" /></option>
 					<option value="ua"><fmt:message key="label.lang_ua" /></option>
@@ -379,7 +379,8 @@ img {
 			</c:if>
 
 			<c:if test="${current_user.getUserType().equals('admin')}">
-				<a href="../admin/admin.jsp"><c:out value="${current_user.getUserName()}" /></a>
+				<a href="../admin/admin.jsp"><c:out
+						value="${current_user.getUserName()}" /></a>
 				<form action="/MyInternetShop/FrontController" method="get">
 					<input type="hidden" id="command" name="command" value="LOGOUT">
 					<button type="submit" class=" btn btn-link">
@@ -522,10 +523,10 @@ img {
 				<li class="page-item"><c:if test="${currentPageProducts != 1}">
 						<a class="page-link"
 							href="/MyInternetShop/FrontController?command=GET_PRODUCTS_AND_PROPERTIES_LIST&page=${currentPageProducts - 1}"><fmt:message
-						key="label.previous" /></a>
+								key="label.previous" /></a>
 					</c:if></li>
 
-				<!--  <li class="page-item"></li>-->
+
 				<c:forEach begin="1" end="${noOfPagesProducts}" var="i">
 					<c:choose>
 						<c:when test="${currentPageProducts eq i}">
@@ -543,7 +544,7 @@ img {
 						test="${currentPageProducts lt noOfPagesProducts}">
 						<a class="page-link"
 							href="/MyInternetShop/FrontController?command=GET_PRODUCTS_AND_PROPERTIES_LIST&page=${currentPageProducts + 1}"><fmt:message
-						key="label.next" /></a>
+								key="label.next" /></a>
 					</c:if></li>
 			</ul>
 		</nav>

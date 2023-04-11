@@ -45,7 +45,6 @@ import dao.ProductDao;
 import dao.impl.ProductDaoImpl;
 import dbconnection_pool.ConnectionPool;
 import exception.DataProcessingException;
-import models.Cart;
 import models.Product;
 
 public class TestProductDaoImpl { // done, add more test cases
@@ -1123,129 +1122,6 @@ public class TestProductDaoImpl { // done, add more test cases
 		assertThrows(DataProcessingException.class, () -> productDao.delete(product.getProductId()));
 	}
 
-	@Test
-	public void testGetCartProduct() throws SQLException, IOException {
-		List<Cart> cartList = new ArrayList<>();
-		Cart cart = new Cart();
-		cart.setProductId(1L);
-		cart.setQuantityInCart(2);
-		byte[] data = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 };
-
-		cartList.add(cart);
-		String query = "SELECT * FROM products WHERE id = ? AND is_deleted = 0";
-
-		when(connectionPool.getConnection()).thenReturn(connection);
-		when(connection.prepareStatement(query)).thenReturn(statement);
-		when(statement.executeQuery()).thenReturn(resultSet);
-
-		when(resultSet.next()).thenReturn(true).thenReturn(false);
-		when(resultSet.getLong("id")).thenReturn(1L);
-		when(resultSet.getString("product_name")).thenReturn("Test Product");
-		when(resultSet.getString("product_desc")).thenReturn("Test Description");
-		when(resultSet.getLong("color_id")).thenReturn(1L);
-		when(resultSet.getLong("category_id")).thenReturn(1L);
-		when(resultSet.getInt("product_price")).thenReturn(100);
-		when(resultSet.getInt("product_quantity_in_stock")).thenReturn(10);
-
-		when(resultSet.getDate("product_date_of_addition")).thenReturn(date);
-		when(date.toLocalDate()).thenReturn(LocalDate.now());
-		when(resultSet.getTime("product_time_of_addition")).thenReturn(time);
-		when(time.toLocalTime()).thenReturn(LocalTime.now());
-
-		when(resultSet.getBlob("product_photo")).thenReturn(blob);
-		when(blob.getBinaryStream()).thenReturn(inputStream);
-		when(inputStream.readAllBytes()).thenReturn(data);
-
-		when(resultSet.getString("product_photo_name")).thenReturn("test.png");
-		when(resultSet.getInt("is_deleted")).thenReturn(0);
-
-		List<Cart> cartProducts = productDao.getCartProduct(cartList);
-
-		assertNotNull(cartProducts);
-		assertEquals(1, cartProducts.size());
-		Cart resultCart = cartProducts.get(0);
-		assertEquals(1L, resultCart.getProductId());
-		assertEquals("Test Product", resultCart.getProductName());
-		assertEquals("Test Description", resultCart.getProductDescription());
-		assertEquals(1L, resultCart.getColorId());
-		assertEquals(1L, resultCart.getCategoryId());
-		assertEquals(100, resultCart.getProductPrice(), 0);
-		assertEquals(10, resultCart.getProductQuantity());
-		assertEquals(2, resultCart.getQuantityInCart());
-		assertEquals(200, resultCart.getTotalPrice(), 0.001);
-		assertNotNull(resultCart.getProductDate());
-		assertNotNull(resultCart.getProductTime());
-		assertNotNull(resultCart.getProductPhoto());
-		assertEquals("test.png", resultCart.getProductPhotoName());
-		assertEquals(0, resultCart.getIsdeleted());
-		assertNotNull(resultCart.getBase64Image());
-	}
-
-	@Test
-	public void testGetCartProductEmptyCartList() throws SQLException, IOException {
-		List<Cart> cartList = new ArrayList<>();
-		String query = "SELECT * FROM products WHERE id = ? AND is_deleted = 0";
-		when(connectionPool.getConnection()).thenReturn(connection);
-		when(connection.prepareStatement(query)).thenReturn(statement);
-		when(statement.executeQuery()).thenReturn(resultSet);
-		when(resultSet.next()).thenReturn(false);
-
-		List<Cart> cartProducts = productDao.getCartProduct(cartList);
-
-		assertNotNull(cartProducts);
-		assertTrue(cartProducts.isEmpty());
-	}
-
-	@Test
-	public void testGetCartProductInvalidProductId() throws SQLException, IOException {
-		List<Cart> cartList = new ArrayList<>();
-		Cart cart = new Cart();
-		cart.setProductId(1L);
-		cart.setQuantityInCart(2);
-		cartList.add(cart);
-
-		String query = "SELECT * FROM products WHERE id = ? AND is_deleted = 0";
-		when(connectionPool.getConnection()).thenReturn(connection);
-		when(connection.prepareStatement(query)).thenReturn(statement);
-		when(statement.executeQuery()).thenReturn(resultSet);
-		when(resultSet.next()).thenReturn(false);
-
-		List<Cart> cartProducts = productDao.getCartProduct(cartList);
-
-		assertNotNull(cartProducts);
-		assertTrue(cartProducts.isEmpty());
-	}
-
-	@Test
-	public void testGetCartProductThrowsException() throws SQLException, IOException {
-		List<Cart> cartList = new ArrayList<>();
-		Cart cart = new Cart();
-		cart.setProductId(1L);
-		cart.setQuantityInCart(2);
-		cartList.add(cart);
-
-		String query = "SELECT * FROM products WHERE id = ? AND is_deleted = 0";
-		when(connectionPool.getConnection()).thenReturn(connection);
-		when(connection.prepareStatement(query)).thenReturn(statement);
-		when(statement.executeUpdate()).thenThrow(SQLException.class);
-
-		assertThrows(DataProcessingException.class, () -> productDao.getCartProduct(cartList));
-
-		verify(statement).setLong(1, cartList.get(0).getProductId());
-	}
-
-	@Test
-	public void testGetCartProductDatabaseUnavailaible() throws SQLException, IOException {
-		List<Cart> cartList = new ArrayList<>();
-		Cart cart = new Cart();
-		cart.setProductId(1L);
-		cart.setQuantityInCart(2);
-		cartList.add(cart);
-
-		when(connectionPool.getConnection()).thenThrow(RuntimeException.class);
-
-		assertThrows(DataProcessingException.class, () -> productDao.getCartProduct(cartList));
-	}
 
 	@Test
 	public void testGetAllByAllFiltersFullNumberOfRecordsIsOne() throws SQLException, IOException {

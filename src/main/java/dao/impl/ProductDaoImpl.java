@@ -22,7 +22,6 @@ import org.apache.logging.log4j.Logger;
 import dao.ProductDao;
 import dbconnection_pool.ConnectionPool;
 import exception.DataProcessingException;
-import models.Cart;
 import models.Product;
 
 public class ProductDaoImpl implements ProductDao { // check by real db interaction
@@ -183,49 +182,6 @@ public class ProductDaoImpl implements ProductDao { // check by real db interact
 			logger.error("Error while deleting product by id:{}", id, e);
 			throw new DataProcessingException("Can't delete product by id " + id, e);
 		}
-	}
-
-	@Override
-	public List<Cart> getCartProduct(List<Cart> cartList) {
-		logger.info("method getCartProduct(List<Cart> cartList)of ProductDaoImpl class is invoked");
-		List<Cart> products = new ArrayList<Cart>();
-		if (cartList.size() > 0) {
-			for (Cart item : cartList) {
-				String query = "SELECT * FROM products WHERE id = ? AND is_deleted = 0";
-				try (Connection connection = connectionPool.getConnection();
-						PreparedStatement getProductStatement = connection.prepareStatement(query)) {
-					getProductStatement.setLong(1, item.getProductId());
-					ResultSet resultSet = getProductStatement.executeQuery();
-					if (resultSet.next() == false) {
-						logger.warn("ResultSet in empty in Java");
-					} else {
-						do {
-							Cart row = new Cart();
-							row.setProductId(resultSet.getLong("id"));
-							row.setProductName(resultSet.getString("product_name"));
-							row.setProductDescription(resultSet.getString("product_desc"));
-							row.setColorId(resultSet.getLong("color_id"));
-							row.setCategoryId(resultSet.getLong("category_id"));
-							row.setProductPrice(resultSet.getInt("product_price"));
-							row.setProductQuantity(resultSet.getInt("product_quantity_in_stock"));
-							row.setQuantityInCart(item.getQuantityInCart());
-							row.setTotalPrice(row.getProductPrice() * row.getQuantityInCart());
-							row.setProductDate(resultSet.getDate("product_date_of_addition").toLocalDate());
-							row.setProductTime(resultSet.getTime("product_time_of_addition").toLocalTime());
-							row.setProductPhoto(resultSet.getBlob("product_photo").getBinaryStream().readAllBytes());
-							row.setBase64Image(Base64.getEncoder().encodeToString(row.getProductPhoto()));
-							row.setProductPhotoName(resultSet.getString("product_photo_name"));
-							products.add(row);
-						} while (resultSet.next());
-					}
-				} catch (Exception e) {
-					logger.error("Error while getting a list of products by cartList:{}", cartList, e);
-					throw new DataProcessingException("Couldn't get a list of products" + "from products table. ", e);
-				}
-			}
-		}
-		logger.debug("Successfully got list of cart products:{}", products);
-		return products;
 	}
 
 	@Override

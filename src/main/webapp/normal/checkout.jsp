@@ -225,8 +225,8 @@ a.button {
 			<form action="/MyInternetShop/FrontController" method="post">
 				<input type="hidden" id="command" name="command"
 					value="CHANGE_LANGUAGE"> <input type="hidden" id="command"
-					name="pageName" value="normal/checkout.jsp"> <select id="language"
-					name="language" onchange="submit()">
+					name="pageName" value="normal/checkout.jsp"> <select
+					id="language" name="language" onchange="submit()">
 					<option><fmt:message key="label.lang_select" /></option>
 					<option value="en"><fmt:message key="label.lang_en" /></option>
 					<option value="ua"><fmt:message key="label.lang_ua" /></option>
@@ -243,12 +243,15 @@ a.button {
 			</form>
 
 			<c:if test="${current_user == null}">
-				<a href="../common_pages/login.jsp"><fmt:message key="label.login" /></a>
-				<a href="../common_pages/register.jsp"><fmt:message key="label.register" /></a>
+				<a href="../common_pages/login.jsp"><fmt:message
+						key="label.login" /></a>
+				<a href="../common_pages/register.jsp"><fmt:message
+						key="label.register" /></a>
 			</c:if>
 
 			<c:if test="${current_user.getUserType().equals('admin')}">
-				<a href="../admin/admin.jsp"><c:out value="${current_user.getUserName()}" /></a>
+				<a href="../admin/admin.jsp"><c:out
+						value="${current_user.getUserName()}" /></a>
 				<form action="/MyInternetShop/FrontController" method="get">
 					<input type="hidden" id="command" name="command" value="LOGOUT">
 					<button type="submit" class=" btn btn-link">
@@ -299,16 +302,18 @@ a.button {
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${cartList}" var="chosenProduct">
+
+									<c:forEach items="${cart.getProducts()}" var="entry">
+										<c:set var="chosenProduct" value="${entry.key}" />
 										<tr>
 											<th scope="row"></th>
 											<td>${chosenProduct.getProductName()}</td>
 
 											<td>${chosenProduct.getProductPrice()}</td>
 
-											<td>${chosenProduct.getQuantityInCart()}</td>
+											<td>${cart.getProductQuantity(chosenProduct)}</td>
 
-											<td>${chosenProduct.getTotalPrice()}</td>
+											<td>${cart.getProductTotalPrice(chosenProduct)}</td>
 
 										</tr>
 
@@ -319,7 +324,7 @@ a.button {
 					</div>
 					<h3 class="text-center pt-3 pb-3">
 						<fmt:message key="label.totalpriceincart" />
-						: ${totalPrice} &#8372;
+						: ${cart.getTotalPrice()} &#8372;
 					</h3>
 
 					<form action="/MyInternetShop/FrontController" method="get">
@@ -370,13 +375,6 @@ a.button {
 									</div>
 								</div>
 							</div>
-
-							<!-- 	<div class="form-group">
-								<input type="text" class="textAreaStyle"
-									placeholder="<fmt:message
-								key="label.enterphone" />..."
-									name="orderPhone" required />
-							</div> -->
 
 							<label for="exampleFormControlInput1"><fmt:message
 									key="label.enteryourshippingaddress" />:</label>

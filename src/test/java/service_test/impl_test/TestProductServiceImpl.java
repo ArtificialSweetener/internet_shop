@@ -5,8 +5,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import dao.ProductDao;
-import models.Cart;
 import models.Product;
 import service.ProductService;
 import service.impl.ProductServiceImpl;
@@ -28,6 +25,7 @@ public class TestProductServiceImpl {// done
 
 	private ProductService productService;
 
+	@SuppressWarnings("deprecation")
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
@@ -112,17 +110,6 @@ public class TestProductServiceImpl {// done
 		verify(productDao).getMaxPrice();
 	}
 
-	@Test
-	public void testGetCartProduct() {
-		List<Cart> cartList = createSampleCartList();
-		List<Cart> expectedProducts = createExpectedProductsList();
-
-		when(productDao.getCartProduct(cartList)).thenReturn(expectedProducts);
-		List<Cart> actualProducts = productService.getCartProduct(cartList);
-
-		assertEquals(expectedProducts, actualProducts);
-		verify(productDao).getCartProduct(cartList);
-	}
 
 	@Test
 	public void testGetAllPagination() {
@@ -164,76 +151,6 @@ public class TestProductServiceImpl {// done
 		when(productDao.getNoDeleteCheck(1L)).thenReturn(optionalProduct);
 		Optional<Product> result = productService.getNoDeleteCheck(1L);
 		assertEquals(optionalProduct, result);
-	}
-
-	private List<Cart> createSampleCartList() {
-		List<Cart> cartList = new ArrayList<>();
-		Cart cart1 = new Cart();
-		cart1.setProductId(1L);
-		cart1.setQuantityInCart(2);
-
-		Cart cart2 = new Cart();
-		cart2.setProductId(2L);
-		cart2.setQuantityInCart(4);
-
-		Cart cart3 = new Cart();
-		cart3.setProductId(3L);
-		cart3.setQuantityInCart(1);
-
-		cartList.add(cart1);
-		cartList.add(cart2);
-		cartList.add(cart3);
-		return cartList;
-	}
-
-	private List<Cart> createExpectedProductsList() {
-		List<Cart> expectedProductsList = new ArrayList<>();
-		Cart expectedProduct1 = new Cart();
-		expectedProduct1.setProductId(1L);
-		expectedProduct1.setProductName("Product 1");
-		expectedProduct1.setProductDescription("This is a description of product 1");
-		expectedProduct1.setColorId(1L);
-		expectedProduct1.setCategoryId(1);
-		expectedProduct1.setProductPrice(100);
-		expectedProduct1.setProductQuantity(10);
-		expectedProduct1.setQuantityInCart(2);
-		expectedProduct1.setTotalPrice(200);
-		expectedProduct1.setProductDate(LocalDate.of(2022, 1, 1));
-		expectedProduct1.setProductTime(LocalTime.of(10, 10, 10));
-		expectedProduct1.setProductPhotoName("photo1.jpeg");
-		expectedProductsList.add(expectedProduct1);
-
-		Cart expectedProduct2 = new Cart();
-		expectedProduct2.setProductId(2L);
-		expectedProduct2.setProductName("Product 2");
-		expectedProduct2.setProductDescription("This is a description of product 2");
-		expectedProduct2.setColorId(2L);
-		expectedProduct2.setCategoryId(2);
-		expectedProduct2.setProductPrice(200);
-		expectedProduct2.setProductQuantity(5);
-		expectedProduct2.setQuantityInCart(4);
-		expectedProduct2.setTotalPrice(800);
-		expectedProduct2.setProductDate(LocalDate.of(2022, 2, 2));
-		expectedProduct2.setProductTime(LocalTime.of(11, 11, 11));
-		expectedProduct2.setProductPhotoName("photo2.jpeg");
-		expectedProductsList.add(expectedProduct2);
-
-		Cart expectedProduct3 = new Cart();
-		expectedProduct3.setProductId(3L);
-		expectedProduct3.setProductName("Product 3");
-		expectedProduct3.setProductDescription("This is a description of product 3");
-		expectedProduct3.setColorId(3L);
-		expectedProduct3.setCategoryId(3);
-		expectedProduct3.setProductPrice(300);
-		expectedProduct3.setProductQuantity(3);
-		expectedProduct3.setQuantityInCart(1);
-		expectedProduct3.setTotalPrice(300);
-		expectedProduct3.setProductDate(LocalDate.of(2022, 3, 3));
-		expectedProduct3.setProductTime(LocalTime.of(12, 12, 12));
-		expectedProduct3.setProductPhotoName("photo3.jpeg");
-		expectedProductsList.add(expectedProduct3);
-
-		return expectedProductsList;
 	}
 
 }

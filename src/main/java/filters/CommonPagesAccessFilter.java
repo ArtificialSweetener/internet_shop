@@ -7,7 +7,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
+//import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,7 +29,7 @@ import util.MessageAttributeUtil;
  * @version 1.0
  * @since 2023-03-13
  */
-@WebFilter(urlPatterns = { "/common_pages/login.jsp", "/common_pages/register.jsp" })
+//@WebFilter(urlPatterns = { "/common_pages/login.jsp", "/common_pages/register.jsp" })
 public class CommonPagesAccessFilter implements Filter {
 
 	/**

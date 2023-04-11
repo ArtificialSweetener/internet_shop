@@ -21,6 +21,7 @@ public class TestUserDao {
 	@Mock
 	UserDao userDao;
 
+	@SuppressWarnings("deprecation")
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
