@@ -12,6 +12,7 @@ import commands.icommand.ICommand;
 import dao.UserDao;
 import dao.impl.UserDaoImpl;
 import dbconnection_pool.ConnectionPoolManager;
+import exception.DataProcessingException;
 import models.User;
 
 import service.UserService;
@@ -57,24 +58,29 @@ public class UnblockUserCommand implements ICommand {
 		}
 		Optional<String> idOptional = Optional.ofNullable(req.getParameter("userId"));
 		if (idOptional.isPresent()) {
-			Optional<User> userOpt = userService.get(Long.parseLong(req.getParameter("userId")));
+			try {
+				Optional<User> userOpt = userService.get(Long.parseLong(req.getParameter("userId")));
 
-			if (userOpt.isPresent()) {
-				User user = userOpt.get();
-				user.setIs_bloked(false);
-				userService.update(user);
-				Optional<Object> userListOptional = Optional
-						.ofNullable(userService.getAll((page - 1) * recordsPerPage, recordsPerPage));
+				if (userOpt.isPresent()) {
+					User user = userOpt.get();
+					user.setIs_bloked(false);
+					userService.update(user);
+					Optional<Object> userListOptional = Optional
+							.ofNullable(userService.getAll((page - 1) * recordsPerPage, recordsPerPage));
 
-				int noOfRecords = userService.getNoOfRecords();
-				int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-				req.getSession().setAttribute("userList", userListOptional.get());
-				MessageAttributeUtil.setMessageAttribute(req, "message.user_unblocked");
-				req.getSession().setAttribute("noOfPagesAllUsers", noOfPages);
-				req.getSession().setAttribute("currentPageAllUsers", page);
-				return targetUrl;
-			} else {
-				MessageAttributeUtil.setMessageAttribute(req, "message.user_not_unblocked"); // refactor
+					int noOfRecords = userService.getNoOfRecords();
+					int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+					req.getSession().setAttribute("userList", userListOptional.get());
+					MessageAttributeUtil.setMessageAttribute(req, "message.user_unblocked");
+					req.getSession().setAttribute("noOfPagesAllUsers", noOfPages);
+					req.getSession().setAttribute("currentPageAllUsers", page);
+					return targetUrl;
+				} else {
+					MessageAttributeUtil.setMessageAttribute(req, "message.user_not_unblocked"); // refactor
+					return targetUrl;
+				}
+			} catch (DataProcessingException e) {
+				MessageAttributeUtil.setMessageAttribute(req, "message.user_not_unblocked_error");
 				return targetUrl;
 			}
 		} else {

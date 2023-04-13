@@ -139,10 +139,9 @@ public class ChangeProductInfoCommand implements ICommand {
 				MessageAttributeUtil.setMessageAttribute(req, "message.product_updated");
 			} catch (DataProcessingException | IOException | ServletException e) {
 				MessageAttributeUtil.setMessageAttribute(req, "message.product_update_fail");
-				return targetUrl;
+				return targetUrl_if_fail;
 			}
 			return targetUrl;
 		}
 	}
-
 }

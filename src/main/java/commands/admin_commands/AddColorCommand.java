@@ -33,9 +33,8 @@ public class AddColorCommand implements ICommand {
 	private static final Logger logger = LogManager.getLogger(AddColorCommand.class);
 
 	/**
-	 * Constructs an AddColorCommand object with a ColorDaoImpl instance obtained
-	 * from ConnectionPoolManager and a ColorServiceImpl instance initialized with
-	 * the ColorDaoImpl instance.
+	 * Constructs an AddColorCommand object with a ColorDaoImpl instance and a
+	 * ColorServiceImpl instance initialized with the ColorDaoImpl instance.
 	 */
 	public AddColorCommand() {
 		ColorDao colorDao = new ColorDaoImpl(ConnectionPoolManager.getInstance().getConnectionPool());

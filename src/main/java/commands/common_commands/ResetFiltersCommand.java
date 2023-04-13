@@ -117,10 +117,9 @@ public class ResetFiltersCommand implements ICommand {
 				MessageAttributeUtil.setMessageAttribute(req, "message.no_products_availaible");
 				return targetUrl;
 			}
-		} catch (ClassCastException e) {
-			throw new DataProcessingException("Could not get productList as an attribute", e);
+		} catch (DataProcessingException | ClassCastException e) {
+			MessageAttributeUtil.setMessageAttribute(req, "message.product_list_error");
+			return targetUrl;
 		}
-
 	}
-
 }

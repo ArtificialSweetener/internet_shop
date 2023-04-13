@@ -9,14 +9,12 @@ public interface ProductService extends GenericService<Product> {
 
 	double getMaxPrice();
 
-	//List<Cart> getCartProduct(List<Cart> cartList);
-
 	List<Product> getAll(int offset, int noOfRecords);
 
 	int getNoOfRecords();
 
 	List<Product> getAllBy(String categoryId, String colorId, String min, String max, String sort, int offset,
 			int noOfRecords);
-	
+
 	Optional<Product> getNoDeleteCheck(Long id);
 }

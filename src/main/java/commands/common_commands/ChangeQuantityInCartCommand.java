@@ -13,12 +13,34 @@ import models.Product;
 import util.MessageAttributeUtil;
 import util.validators.InputValidator;
 
+/**
+ * The ChangeQuantityInCartCommand class implements the ICommand interface. This
+ * class is responsible for changing the quantity of a product in the cart. If
+ * the quantity is changed successfully, a message indicating that the quantity
+ * in the cart has changed is displayed. If the quantity is not changed
+ * successfully, an error message is displayed.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-04-11
+ */
 public class ChangeQuantityInCartCommand implements ICommand {
 	private static final Logger logger = LogManager.getLogger(ChangeQuantityInCartCommand.class);
 
 	public ChangeQuantityInCartCommand() {
 	}
 
+	/**
+	 * This method is used to execute the ChangeQuantityInCartCommand command. It
+	 * changes the quantity of a product in the cart, and returns the appropriate
+	 * message.
+	 * 
+	 * @param req  The HttpServletRequest object that contains the request the
+	 *             client has made of the servlet
+	 * @param resp The HttpServletResponse object that contains the response the
+	 *             servlet sends to the client
+	 * @return String the URL of the view to redirect to
+	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing ChangeQuantityInCartCommand");

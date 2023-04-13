@@ -8,20 +8,6 @@
 <fmt:setLocale value="${language}" />
 <fmt:setBundle basename="message" />
 
-<!--<c:if test="${current_user == null}">
-	<c:set var="message"
-		value="You are not logged in. Please, login first to get access to this page."
-		scope="session" />
-	<c:redirect url="/common_pages/login.jsp"></c:redirect>
-</c:if>
-<c:if test="${current_user.getUserType().equals('normal')}">
-	<c:set var="message"
-		value="You are not an admin. Your access to this page is denied. Please login as an admin to get access to this page."
-		scope="session" />
-	<c:redirect url="/common_pages/login.jsp"></c:redirect>
-</c:if> -->
-
-
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <!DOCTYPE html>
 <html lang="${language}">
@@ -29,9 +15,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
+	rel="stylesheet">
+<!-- integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous"-->
 <style>
 @import
 	url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
@@ -58,6 +44,29 @@
 }
 
 .btn-link {
+	float: left;
+	color: black;
+	text-align: center;
+	padding: 12px;
+	text-decoration: none;
+	font-size: 25px;
+	font-weight: bold;
+	line-height: 25px;
+	border-radius: 4px;
+}
+
+.btn-link:hover {
+	background-color: #ddd;
+	color: black;
+}
+
+.btn-link:active {
+	background-color: dodgerblue;
+	color: dodgerblue;
+	box-shadow: none;
+}
+
+.btn-link:focus {
 	float: left;
 	color: black;
 	text-align: center;
@@ -155,9 +164,53 @@ body {
 	color: #fff;
 }
 
-a.button {
-	background-color: #00ac96;
-	color: #fff;
+.column {
+	float: left;
+	width: 25%;
+	padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {
+	margin: 0 -5px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+	.column {
+		width: 100%;
+		display: block;
+		margin-bottom: 20px;
+	}
+}
+
+/* Style the counter cards */
+.card {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	padding: 16px;
+	text-align: center;
+	background-color: #f1f1f1;
+	margin-top: 1rem;
+}
+
+.card-title {
+	font-weight: bold;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.card-text {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .textAreaStyle {
@@ -177,22 +230,82 @@ a.button {
 	padding: 10px 15px;
 }
 
-.c_card {
-	padding-bottom: 50px;
+.btn-primary {
+	color: #fff;
+	background-color: #00ac96;
+	border-color: #00ac96;
 }
 
-.c_btn {
-	border: none;
+.price-input {
+	width: 100%;
+	display: flex;
+	margin: 5px 0 10px;
 }
 
-.card-body {
-	min-height: 190px;
-	height: fit-content;
-	font-size: 30px;
+.price-input .field {
+	display: flex;
+	width: 100%;
+	height: 45px;
+	align-items: center;
 }
 
-.card-body .text-uppercase {
-	font-size: 30px;
+.field input {
+	width: 100%;
+	height: 100%;
+	outline: none;
+	font-size: 19px;
+	margin-left: 12px;
+	border-radius: 5px;
+	text-align: center;
+	border: 1px solid #999;
+	-moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button
+	{
+	-webkit-appearance: none;
+}
+
+.price-input .separator {
+	width: 130px;
+	display: flex;
+	font-size: 19px;
+	align-items: center;
+	justify-content: center;
+}
+
+#price {
+	color: red;
+	font-weight: bold;
+	font-size: 50px;
+}
+
+img {
+	max-width: 100%;
+	max-height: 350px;
+	height: auto;
+	width: auto;
+}
+
+.text_end {
+	float: right;
+}
+
+.centered__sample {
+	position: absolute;
+	bottom: 15px;
+	left: 50%;
+}
+
+.centered__reset {
+	position: absolute;
+	bottom: 15px;
+	left: 50%;
+}
+
+.header a.active {
+	background-color: dodgerblue;
+	color: white;
 }
 
 .header-right {
@@ -218,6 +331,11 @@ a.button {
 	background-color: dodgerblue;
 	color: white;
 }
+
+.custom_buttons {
+	display: flex;
+	justify-content: center;
+}
 </style>
 </head>
 <body>
@@ -231,18 +349,21 @@ a.button {
 			</button>
 		</form>
 
+
+
 		<div class="header-right">
-			<a href="../index.jsp"><fmt:message key="label.about" /></a>
+			<a href="index.jsp"><fmt:message key="label.about" /></a>
 			<form action="/MyInternetShop/FrontController" method="post">
 				<input type="hidden" id="command" name="command"
 					value="CHANGE_LANGUAGE"> <input type="hidden" id="command"
-					name="pageName" value="admin/change_product.jsp"> <select
-					id="language" name="language" onchange="submit()">
+					name="pageName" value="index.jsp"> <select id="language"
+					name="language" onchange="submit()">
 					<option><fmt:message key="label.lang_select" /></option>
 					<option value="en"><fmt:message key="label.lang_en" /></option>
 					<option value="ua"><fmt:message key="label.lang_ua" /></option>
 				</select>
 			</form>
+
 
 			<form action="/MyInternetShop/FrontController" method="get">
 				<input type="hidden" id="command" name="command"
@@ -252,110 +373,56 @@ a.button {
 				</button>
 			</form>
 
+			<c:if test="${current_user == null}">
+				<a href="common_pages/login.jsp"><fmt:message key="label.login" /></a>
+				<a href="common_pages/register.jsp"><fmt:message
+						key="label.register" /></a>
+			</c:if>
+
 			<c:if test="${current_user.getUserType().equals('admin')}">
-
-				<a class="active" href="admin.jsp"><c:out
+				<a href="admin/admin.jsp"><c:out
 						value="${current_user.getUserName()}" /></a>
-
 				<form action="/MyInternetShop/FrontController" method="get">
 					<input type="hidden" id="command" name="command" value="LOGOUT">
 					<button type="submit" class=" btn btn-link">
 						<fmt:message key="label.logout" />
 					</button>
 				</form>
-
 			</c:if>
-		</div>
-	</div>
 
-	<div class="container">
-		<h1 class="text-center pt-3 pb-3">
-			<fmt:message key="label.welcomechangeproduct" />
-		</h1>
-		<div class="container-fluid mt-3">
-			<jsp:include page="../message.jsp" />
-		</div>
-	</div>
-
-	<div class=" row d-flex justify-content-center">
-		<div class="card col-md-6 center-block">
-			<div class="card-body text-center pt-4 pb-6 c_card">
-
-				<form action="/MyInternetShop/FrontController" method="post"
-					enctype="multipart/form-data">
-					<input type="hidden" id="command" name="command"
-						value="CHANGE_PRODUCT_INFO">
-					<div class="row g-2">
-						<div class="form-group"><label for=""><fmt:message
-									key="label.changeproduct_name" /></label>
-							<input type="text" class="textAreaStyle"
-								placeholder="${product.getProductName()}" name="pName" />
-						</div>
-
-						<div class="form-group"><label for=""><fmt:message
-									key="label.changeproduct_description" /></label>
-							<textarea style="height: 300px;" class="textAreaStyle"
-								placeholder="${product.getProductDescription()}"
-								name="pDescription"></textarea>
-						</div>
-
-						<div class="form-group">
-							<label for=""><fmt:message key="label.changeproductcolor" /></label>
-							<select name="color_id" class="textAreaStyle cust_input"
-								id="color_id">
-								<c:forEach items="${colorList}" var="color">
-									<option value="${color.getColorId()}">
-										${color.getColorName()}</option>
-								</c:forEach>
-
-							</select>
-						</div>
-						<div class="form-group">
-							<label for=""><fmt:message
-									key="label.changeproductcategory" /></label> <select name="catId"
-								class="textAreaStyle cust_input" id="catId">
-								<c:forEach items="${categoryList}" var="category">
-									<option value="${category.getCategoryId()}">
-										${category.getCategoryTitle()}</option>
-								</c:forEach>
-
-							</select>
-						</div>
-
-						<div class="form-group">
-							<label for=""><fmt:message
-									key="label.changeproduct_price" /></label> <input type="number"
-								class="textAreaStyle cust_input mt-3"
-								placeholder="${product.getProductPrice()}" name="pPrice"></input>
-						</div>
-
-						<div class="form-group">
-							<label for=""><fmt:message
-									key="label.changeproduct_quantity_in_stock" /></label> <input
-								type="number" class="textAreaStyle cust_input mt-3"
-								placeholder="${product.getProductQuantity()}" name="pQuantity"></input>
-						</div>
-
-						<!-- product file -->
-						<div class="form-group">
-							<label for=""><fmt:message
-									key="label.changeproductpicture" /></label> <br> <input
-								type="file" class="textAreaStyle cust_input"
-								placeholder="Product photo" name="pPhoto"></input>
-						</div>
-					</div>
-					<div class="container text-center mt-3">
-						<a class="btn btn-secondary"
-							href="/MyInternetShop/FrontController?command=GET_PRODUCTS_AND_PROPERTIES_LIST&page=1"
-							role="button"><fmt:message key="label.goback" /></a>
-						<button type="submit" class="btn btn-outline-success">
-							<fmt:message key="label.updateproductinfo" />
-						</button>
-					</div>
+			<c:if test="${current_user.getUserType().equals('normal')}">
+				<a href="normal/normal.jsp"><c:out
+						value="${current_user.getUserName()}" /></a>
+				<form action="/MyInternetShop/FrontController" method="get">
+					<input type="hidden" id="command" name="command" value="LOGOUT">
+					<button type="submit" class=" btn btn-link">
+						<fmt:message key="label.logout" />
+					</button>
 				</form>
+			</c:if>
+
+		</div>
+	</div>
+	<div class="card">
+		<div class="card-body">
+			<div class="container-fluid mt-3">
+				<jsp:include page="../message.jsp" />
 			</div>
 		</div>
 	</div>
 
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js">
+		<!--integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"-->
+	</script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js">
+	<!--integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+		crossorigin="anonymous"--></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js">
+	<!--integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+		crossorigin="anonymous"--></script>
 </body>
 </html>
+

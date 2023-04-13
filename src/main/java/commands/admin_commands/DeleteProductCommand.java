@@ -11,6 +11,7 @@ import commands.icommand.ICommand;
 import dao.ProductDao;
 import dao.impl.ProductDaoImpl;
 import dbconnection_pool.ConnectionPoolManager;
+import exception.DataProcessingException;
 import service.ProductService;
 import service.impl.ProductServiceImpl;
 import util.MessageAttributeUtil;
@@ -65,9 +66,15 @@ public class DeleteProductCommand implements ICommand {
 			return targetUrl;
 		} else {
 			long id = Long.parseLong(idOptional.get());
-			productService.delete(id);
-			MessageAttributeUtil.setMessageAttribute(req, "message.product_deleted");
-			return targetUrl;
+			try {
+				productService.delete(id);
+				MessageAttributeUtil.setMessageAttribute(req, "message.product_deleted");
+				return targetUrl;
+			} catch (DataProcessingException e) {
+				MessageAttributeUtil.setMessageAttribute(req, "message.prod_delete_fail_error");
+				return targetUrl;
+			}
+
 		}
 	}
 }

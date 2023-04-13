@@ -260,6 +260,7 @@ body {
 								<th scope="col"><fmt:message key="label.category" /></th>
 								<th scope="col"><fmt:message key="label.priceforone" /></th>
 								<th scope="col"><fmt:message key="label.quantity" /></th>
+								<th scope="col"><fmt:message key="label.quantity_in_stock" /></th>
 								<th scope="col"><fmt:message key="label.update" /> <fmt:message
 										key="label.quantity" /></th>
 								<th scope="col"><fmt:message key="label.totalprice" /></th>
@@ -283,7 +284,8 @@ body {
 									<td>${chosenProduct.getProductPrice()}</td>
 
 									<td>${cart.getProductQuantity(chosenProduct)}</td>
-
+									
+									<td>${chosenProduct.getProductQuantity()}</td>
 
 									<td><form style="margin-top: 1em;"
 											action="/MyInternetShop/FrontController" method="get">

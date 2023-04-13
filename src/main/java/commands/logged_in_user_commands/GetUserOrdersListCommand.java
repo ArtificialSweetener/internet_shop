@@ -12,6 +12,7 @@ import commands.icommand.ICommand;
 import dao.OrderDao;
 import dao.impl.OrderDaoImpl;
 import dbconnection_pool.ConnectionPoolManager;
+import exception.DataProcessingException;
 import models.Order;
 import models.User;
 import service.OrderService;
@@ -71,27 +72,33 @@ public class GetUserOrdersListCommand implements ICommand {
 		}
 
 		String targetUrl = "/normal/orders_user.jsp";
-		String targetUrl_if_fail = "/normal/login.jsp";
+		String targetUrl_if_not_logged_in = "/normal/login.jsp";
+		String targetUrl_if_fail = "/normal/normal.jsp";
 		User user = null;
 		if (currentUserOptional.isPresent()) {
 			user = (User) currentUserOptional.get();
-			List<Order> orderList = orderService.getAllOrdersByUserId(user.getUserId(), (page - 1) * recordsPerPage,
-					recordsPerPage);
-			if (orderList.isEmpty()) {
-				MessageAttributeUtil.setMessageAttribute(req, "message.order_list_empty");
-				return targetUrl;
-			} else {
-				int noOfRecords = orderService.getNoOfRecords();
-				int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-				System.out.println(orderList);
-				req.getSession().setAttribute("allOrdersList", orderList);
-				req.getSession().setAttribute("noOfPagesAllUserOrders", noOfPages);
-				req.getSession().setAttribute("currentPageAllUserOrders", page);
-				return targetUrl;
+			try {
+				List<Order> orderList = orderService.getAllOrdersByUserId(user.getUserId(), (page - 1) * recordsPerPage,
+						recordsPerPage);
+				if (orderList.isEmpty()) {
+					MessageAttributeUtil.setMessageAttribute(req, "message.order_list_empty");
+					return targetUrl;
+				} else {
+					int noOfRecords = orderService.getNoOfRecords();
+					int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+					System.out.println(orderList);
+					req.getSession().setAttribute("allOrdersList", orderList);
+					req.getSession().setAttribute("noOfPagesAllUserOrders", noOfPages);
+					req.getSession().setAttribute("currentPageAllUserOrders", page);
+					return targetUrl;
+				}
+			} catch (DataProcessingException e) {
+				MessageAttributeUtil.setMessageAttribute(req, "message.order_list_error");
+				return targetUrl_if_fail;
 			}
 		} else {
 			MessageAttributeUtil.setMessageAttribute(req, "message.login_to_view");
-			return targetUrl_if_fail;
+			return targetUrl_if_not_logged_in;
 		}
 	}
 

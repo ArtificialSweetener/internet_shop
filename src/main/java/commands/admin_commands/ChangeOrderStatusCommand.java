@@ -12,6 +12,7 @@ import commands.icommand.ICommand;
 import dao.OrderDao;
 import dao.impl.OrderDaoImpl;
 import dbconnection_pool.ConnectionPoolManager;
+import exception.DataProcessingException;
 import models.Order;
 import service.OrderService;
 import service.impl.OrderServiceImpl;
@@ -70,28 +71,34 @@ public class ChangeOrderStatusCommand implements ICommand {
 			MessageAttributeUtil.setMessageAttribute(req, "message.no_orders_status_fail");
 			return targetUrl;
 		} else {
-			Optional<Order> orderOpt = orderService.get(Long.parseLong(orderIdOptional.get()));
-			if (orderOpt.isPresent()) {
-				Order order = orderOpt.get();
-				if (order.getOrderStatus().equalsIgnoreCase(currentStatusOptional.get())) {
-					MessageAttributeUtil.setMessageAttribute(req, "message.order_status_already_fail");
-					return targetUrl;
+			try {
+				Optional<Order> orderOpt = orderService.get(Long.parseLong(orderIdOptional.get()));
+				if (orderOpt.isPresent()) {
+					Order order = orderOpt.get();
+					if (order.getOrderStatus().equalsIgnoreCase(currentStatusOptional.get())) {
+						MessageAttributeUtil.setMessageAttribute(req, "message.order_status_already_fail");
+						return targetUrl;
+					} else {
+						order.setOrderStatus(currentStatusOptional.get());
+
+						orderService.update(order);
+						List<Order> allOrdersList = orderService.getAll((page - 1) * recordsPerPage, recordsPerPage);
+						int noOfRecords = orderService.getNoOfRecords();
+
+						int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+
+						req.getSession().setAttribute("allOrdersList", allOrdersList);
+						req.getSession().setAttribute("noOfPagesAllOrders", noOfPages);
+						req.getSession().setAttribute("currentPageAllOrders", page);
+						MessageAttributeUtil.setMessageAttribute(req, "message.order_status_updated");
+						return targetUrl;
+					}
 				} else {
-					order.setOrderStatus(currentStatusOptional.get());
-					orderService.update(order);
-					List<Order> allOrdersList = orderService.getAll((page - 1) * recordsPerPage, recordsPerPage);
-					int noOfRecords = orderService.getNoOfRecords();
-
-					int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-
-					req.getSession().setAttribute("allOrdersList", allOrdersList);
-					req.getSession().setAttribute("noOfPagesAllOrders", noOfPages);
-					req.getSession().setAttribute("currentPageAllOrders", page);
-					MessageAttributeUtil.setMessageAttribute(req, "message.order_status_updated");
+					MessageAttributeUtil.setMessageAttribute(req, "message.order_not_chosen_status_fail");
 					return targetUrl;
 				}
-			} else {
-				MessageAttributeUtil.setMessageAttribute(req, "message.order_not_chosen_status_fail"); // refactor
+			} catch (DataProcessingException e) {
+				MessageAttributeUtil.setMessageAttribute(req, "message.change_status_fail_error");
 				return targetUrl;
 			}
 		}

@@ -71,6 +71,9 @@ public class AddProductCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing AddProductCommand");
+		String targetUrl = "/admin/admin.jsp";
+		String targetUrl_if_fail = "/admin/add_product.jsp";
+
 		String productName = req.getParameter("pName").trim();
 		String productDescription = req.getParameter("pDescription").trim();
 		long colorId = Long.parseLong(req.getParameter("color_id"));
@@ -81,7 +84,7 @@ public class AddProductCommand implements ICommand {
 		LocalTime productTime = LocalTime.now();
 
 		if (formValidator.validate(req) == false) {
-			return "/admin/add_product.jsp";
+			return targetUrl_if_fail;
 		}
 		try {
 			Part filePart = req.getPart("pPhoto");
@@ -100,8 +103,8 @@ public class AddProductCommand implements ICommand {
 			MessageAttributeUtil.setMessageAttribute(req, "message.add_prod");
 		} catch (DataProcessingException | IOException | ServletException e) {
 			MessageAttributeUtil.setMessageAttribute(req, "message.add_prod_fail");
+			return targetUrl_if_fail;
 		}
-		String targetUrl = "/admin/admin.jsp";
 		return targetUrl;
 	}
 

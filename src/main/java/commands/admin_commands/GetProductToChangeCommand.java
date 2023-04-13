@@ -11,6 +11,7 @@ import commands.icommand.ICommand;
 import dao.ProductDao;
 import dao.impl.ProductDaoImpl;
 import dbconnection_pool.ConnectionPoolManager;
+import exception.DataProcessingException;
 import models.Product;
 import service.ProductService;
 import service.impl.ProductServiceImpl;
@@ -61,12 +62,17 @@ public class GetProductToChangeCommand implements ICommand {
 		String idString = req.getParameter("productId");
 		if (!idString.isBlank()) {
 			long id = Long.parseLong(idString);
-			Optional<Product> productOpt = productService.get(id);
-			if (productOpt.isPresent()) {
-				req.getSession().setAttribute("product", productOpt.get());
-				return targetUrl;
-			} else {
-				MessageAttributeUtil.setMessageAttribute(req, "message.prod_not_chosen_info_fail"); // refactor
+			try {
+				Optional<Product> productOpt = productService.get(id);
+				if (productOpt.isPresent()) {
+					req.getSession().setAttribute("product", productOpt.get());
+					return targetUrl;
+				} else {
+					MessageAttributeUtil.setMessageAttribute(req, "message.prod_not_chosen_info_fail"); // refactor
+					return targetUrl_if_fail;
+				}
+			} catch (DataProcessingException e) {
+				MessageAttributeUtil.setMessageAttribute(req, "message.prod_info_error"); // refactor
 				return targetUrl_if_fail;
 			}
 		} else {

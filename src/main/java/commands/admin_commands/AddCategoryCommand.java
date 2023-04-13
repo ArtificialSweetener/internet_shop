@@ -60,8 +60,10 @@ public class AddCategoryCommand implements ICommand {
 		logger.info("Executing AddCategoryCommand");
 		String categoryTitle = req.getParameter("catTitle").trim();
 		String categoryDescription = req.getParameter("catDescription").trim();
+		String targetUrl = "/admin/admin.jsp";
+		String targetUrl_if_fail = "/admin/add_category.jsp";
 		if (formValidator.validate(req) == false) {
-			return "/admin/add_category.jsp";
+			return targetUrl_if_fail;
 		}
 		try {
 			Category category = new Category(categoryTitle, categoryDescription);
@@ -69,8 +71,8 @@ public class AddCategoryCommand implements ICommand {
 			MessageAttributeUtil.setMessageAttribute(req, "message.add_cat");
 		} catch (DataProcessingException e) {
 			MessageAttributeUtil.setMessageAttribute(req, "message.add_cat_fail");
+			return targetUrl_if_fail;
 		}
-		String targetUrl = "/admin/admin.jsp";
 		return targetUrl;
 	}
 }

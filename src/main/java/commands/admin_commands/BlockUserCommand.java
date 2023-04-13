@@ -11,6 +11,7 @@ import commands.icommand.ICommand;
 import dao.UserDao;
 import dao.impl.UserDaoImpl;
 import dbconnection_pool.ConnectionPoolManager;
+import exception.DataProcessingException;
 import service.UserService;
 import service.impl.UserServiceImpl;
 import util.MessageAttributeUtil;
@@ -59,15 +60,21 @@ public class BlockUserCommand implements ICommand {
 		}
 		Optional<String> idOptional = Optional.ofNullable(req.getParameter("userId"));
 		if (idOptional.isPresent()) {
-			userService.delete(Long.parseLong(idOptional.get()));
-			Optional<Object> userListOptional = Optional
-					.ofNullable(userService.getAll((page - 1) * recordsPerPage, recordsPerPage));
+			try {
+				userService.delete(Long.parseLong(idOptional.get()));
 
-			int noOfRecords = userService.getNoOfRecords();
-			int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-			req.getSession().setAttribute("userList", userListOptional.get());
-			MessageAttributeUtil.setMessageAttribute(req, "message.user_blocked");
-			req.getSession().setAttribute("noOfPagesAllUsers", noOfPages);
+				Optional<Object> userListOptional = Optional
+						.ofNullable(userService.getAll((page - 1) * recordsPerPage, recordsPerPage));
+
+				int noOfRecords = userService.getNoOfRecords();
+				int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+				req.getSession().setAttribute("userList", userListOptional.get());
+				MessageAttributeUtil.setMessageAttribute(req, "message.user_blocked");
+				req.getSession().setAttribute("noOfPagesAllUsers", noOfPages);
+			} catch (DataProcessingException e) {
+				MessageAttributeUtil.setMessageAttribute(req, "message.user_not_blocked_error");
+				return targetUrl;
+			}
 			req.getSession().setAttribute("currentPageAllUsers", page);
 			return targetUrl;
 		} else {

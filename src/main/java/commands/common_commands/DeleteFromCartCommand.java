@@ -11,12 +11,26 @@ import commands.icommand.ICommand;
 import models.Cart;
 import util.MessageAttributeUtil;
 
+/**
+ * A command class that handles deleting a product from the user's cart.
+ * 
+ * @author annak
+ * @version 1.0
+ * @since 2023-03-13
+ */
 public class DeleteFromCartCommand implements ICommand {
 	private static final Logger logger = LogManager.getLogger(DeleteFromCartCommand.class);
 
 	public DeleteFromCartCommand() {
 	}
 
+	/**
+	 * Executes the command to delete a product from the user's cart.
+	 *
+	 * @param req  the HTTP servlet request object.
+	 * @param resp the HTTP servlet response object.
+	 * @return the URL of the page to forward to.
+	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing DeleteFromCartCommand");

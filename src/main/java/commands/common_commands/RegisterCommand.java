@@ -15,6 +15,7 @@ import dao.UserSaltDao;
 import dao.impl.UserDaoImpl;
 import dao.impl.UserSaltDaoImpl;
 import dbconnection_pool.ConnectionPoolManager;
+import exception.DataProcessingException;
 import models.User;
 import models.UserSalt;
 import service.UserSaltService;
@@ -76,17 +77,14 @@ public class RegisterCommand implements ICommand {
 
 		if (userName.isEmpty() || userSurname.isEmpty() || userEmail.isEmpty() || userPassword.isEmpty()
 				|| repeatPassword.isEmpty()) {
-			System.out.println("empty input in form");
 			MessageAttributeUtil.setMessageAttribute(req, "message.fields_empty_registration_fail");
 			return targetUrl;
 		} else if (formValidator.validate(req) == false) {
 			return targetUrl;
 		} else if (!userPassword.equals(repeatPassword)) {
-			System.out.println("passwords not matching");
 			MessageAttributeUtil.setMessageAttribute(req, "message.pass_not_match");
 			return targetUrl;
 		} else if (userService.findByEmail(userEmail).isPresent()) {
-			System.out.println("this email is already registered on the site.");
 			MessageAttributeUtil.setMessageAttribute(req, "message.email_already_registered");
 			return targetUrl;
 		} else {
@@ -112,12 +110,13 @@ public class RegisterCommand implements ICommand {
 				UserSalt userSalt = new UserSalt(user.getUserId(), saltString);
 				userSaltService.create(userSalt);
 
-				System.out.println(userSalt.getUserSaltId());
-				System.out.println(userSalt.getUserId());
 			} catch (NoSuchAlgorithmException e) {
 				MessageAttributeUtil.setMessageAttribute(req, "message.could_not_do_password_encryption");
+				return targetUrl;
+			} catch (DataProcessingException e) {
+				MessageAttributeUtil.setMessageAttribute(req, "message.registration_fail");
+				return targetUrl;
 			}
-
 			MessageAttributeUtil.setMessageAttribute(req, "message.registration_successful");
 			return targetUrl;
 		}

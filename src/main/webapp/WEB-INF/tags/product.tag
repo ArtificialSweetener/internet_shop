@@ -13,10 +13,12 @@
 	<div class="card-body d-flex flex-column">
 		<h5 class="card-title">${product.getProductName()}</h5>
 		<c:if test="${product.getProductQuantity() == 0}">
-			<h6 class="card-subtitle mb-2 text-muted">Out of stock</h6>
+		
+			<h6 class="card-subtitle mb-2 text-muted"><fmt:message key="label.out_of_stock" /></h6>
 		</c:if>
 		<c:if test="${product.getProductQuantity() > 0}">
-			<h6 class="card-subtitle mb-2 text-muted">In stock</h6>
+		
+			<h6 class="card-subtitle mb-2 text-muted"><fmt:message key="label.in_stock" /></h6>
 		</c:if>
 		<p class="card-text">${product.getProductDescription()}</p>
 		<c:forEach items="${categoryList}" var="category">

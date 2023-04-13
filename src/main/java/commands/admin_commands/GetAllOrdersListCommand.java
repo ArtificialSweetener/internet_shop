@@ -13,6 +13,7 @@ import commands.icommand.ICommand;
 import dao.OrderDao;
 import dao.impl.OrderDaoImpl;
 import dbconnection_pool.ConnectionPoolManager;
+import exception.DataProcessingException;
 import models.Order;
 import service.OrderService;
 import service.impl.OrderServiceImpl;
@@ -61,20 +62,26 @@ public class GetAllOrdersListCommand implements ICommand {
 			page = Integer.parseInt(req.getParameter("page"));
 			System.out.println("Changed page attribute to " + page);
 		}
-		Optional<Object> orderListOptional = Optional
-				.ofNullable(orderService.getAll((page - 1) * recordsPerPage, recordsPerPage));
-		int noOfRecords = orderService.getNoOfRecords();
-		int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
-		if (orderListOptional.isPresent()) {
-			@SuppressWarnings("unchecked")
-			List<Order> orderList = (List<Order>) orderListOptional.get();
-			req.getSession().setAttribute("allOrdersList", orderList);
-			req.getSession().setAttribute("noOfPagesAllOrders", noOfPages);
-			req.getSession().setAttribute("currentPageAllOrders", page);
-			return targetUrl;
-		} else {
-			MessageAttributeUtil.setMessageAttribute(req, "message.order_list_empty");
-			return targetUrl;
+
+		try {
+			Optional<Object> orderListOptional = Optional
+					.ofNullable(orderService.getAll((page - 1) * recordsPerPage, recordsPerPage));
+			int noOfRecords = orderService.getNoOfRecords();
+			int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+			if (orderListOptional.isPresent()) {
+				@SuppressWarnings("unchecked")
+				List<Order> orderList = (List<Order>) orderListOptional.get();
+				req.getSession().setAttribute("allOrdersList", orderList);
+				req.getSession().setAttribute("noOfPagesAllOrders", noOfPages);
+				req.getSession().setAttribute("currentPageAllOrders", page);
+				return targetUrl;
+			} else {
+				MessageAttributeUtil.setMessageAttribute(req, "message.order_list_empty");
+				return targetUrl;
+			}
+		} catch (DataProcessingException e) {
+			MessageAttributeUtil.setMessageAttribute(req, "message.order_list_error");
+			return "/admin/admin.jsp";
 		}
 	}
 }

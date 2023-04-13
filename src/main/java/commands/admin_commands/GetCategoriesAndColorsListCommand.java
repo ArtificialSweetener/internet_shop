@@ -13,6 +13,7 @@ import dao.ColorDao;
 import dao.impl.CategoryDaoImpl;
 import dao.impl.ColorDaoImpl;
 import dbconnection_pool.ConnectionPoolManager;
+import exception.DataProcessingException;
 import models.Category;
 import models.Color;
 
@@ -20,6 +21,7 @@ import service.CategoryService;
 import service.ColorService;
 import service.impl.CategoryServiceImpl;
 import service.impl.ColorServiceImpl;
+import util.MessageAttributeUtil;
 
 /**
  * The GetCategoriesAndColorsListCommand class implements ICommand interface and
@@ -65,12 +67,18 @@ public class GetCategoriesAndColorsListCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing GetCategoriesAndColorsListCommand");
-		List<Category> categoryList = categoryService.getAll();
-		List<Color> colorList = colorService.getAll();
-		req.getSession().setAttribute("categoryList", categoryList);
-		req.getSession().setAttribute("colorList", colorList);
 		String targetUrl = "/admin/add_product.jsp";
-		return targetUrl;
+		String targetUrl_if_fail = "/admin/admin.jsp";
+		try {
+			List<Category> categoryList = categoryService.getAll();
+			List<Color> colorList = colorService.getAll();
+			req.getSession().setAttribute("categoryList", categoryList);
+			req.getSession().setAttribute("colorList", colorList);
+			return targetUrl;
+		} catch (DataProcessingException e) {
+			MessageAttributeUtil.setMessageAttribute(req, "message.categories_and_colors_list_error");
+			return targetUrl_if_fail;
+		}
 	}
 
 }
