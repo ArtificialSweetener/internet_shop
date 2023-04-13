@@ -116,7 +116,7 @@ public class TestColorDaoImpl { // done, add more test cases
 	}
 
 	@Test
-	public void testGetOrderByNonExistentId() throws SQLException {
+	public void testGetСolorByNonExistentId() throws SQLException {
 		Long nonExistentId = 999L;
 		String query = "SELECT * FROM colors WHERE id = ?";
 		when(connectionPool.getConnection()).thenReturn(connection);
@@ -128,7 +128,7 @@ public class TestColorDaoImpl { // done, add more test cases
 	}
 
 	@Test(expected = DataProcessingException.class)
-	public void testGetUserByIdThrowsException() throws SQLException {
+	public void testGetColorByIdThrowsException() throws SQLException {
 		Long invalidId = -1L;
 		String query = "SELECT * FROM colors WHERE id = ?";
 		when(connectionPool.getConnection()).thenReturn(connection);

@@ -145,7 +145,10 @@ public class ProductDaoImpl implements ProductDao { // check by real db interact
 	@Override
 	public Product update(Product product) {
 		logger.info("method update(Product product) of ProductDaoImpl class is invoked");
-		String selectQuery = "UPDATE products SET product_name = ?, product_desc = ?, color_id = ? , category_id = ?, product_price= ?, product_quantity_in_stock = ?, product_photo =?, product_photo_name =? "
+		String selectQuery = "UPDATE products SET product_name = ?, "
+				+ "product_desc = ?, "
+				+ "color_id = ? , "
+				+ "category_id = ?, product_price= ?, product_quantity_in_stock = ?, product_photo =?, product_photo_name =? "
 				+ "WHERE id = ? AND is_deleted = 0";
 		try (Connection connection = connectionPool.getConnection();
 				PreparedStatement updateProductStatement = connection.prepareStatement(selectQuery)) {
@@ -158,7 +161,7 @@ public class ProductDaoImpl implements ProductDao { // check by real db interact
 			updateProductStatement.setBlob(7, new SerialBlob(product.getProductPhoto()));
 			updateProductStatement.setString(8, product.getProductPhotoName());
 			updateProductStatement.setLong(9, product.getProductId());
-			//updateProductStatement.setInt(10, product.getIsdeleted());
+			updateProductStatement.setInt(10, product.getIsdeleted());
 			updateProductStatement.executeUpdate();
 			logger.debug("Successfully updated product:{}", product);
 		} catch (SQLException | RuntimeException e) {

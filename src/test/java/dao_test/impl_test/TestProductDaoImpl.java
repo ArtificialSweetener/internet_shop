@@ -980,8 +980,9 @@ public class TestProductDaoImpl { // done, add more test cases
 		verify(statement, times(1)).setInt(6, product.getProductQuantity());
 		verify(statement, times(1)).setBlob(7, new SerialBlob(product.getProductPhoto()));
 		verify(statement, times(1)).setString(8, product.getProductPhotoName());
-		verify(statement, times(1)).setInt(9, product.getIsdeleted());
-		verify(statement, times(1)).setLong(10, product.getProductId());
+		verify(statement, times(1)).setInt(10, product.getIsdeleted());
+		verify(statement, times(1)).setLong(9, product.getProductId());
+		
 
 		verify(statement, times(1)).executeUpdate();
 		verify(statement, times(1)).close();
@@ -1121,7 +1122,6 @@ public class TestProductDaoImpl { // done, add more test cases
 		when(connectionPool.getConnection()).thenThrow(RuntimeException.class);
 		assertThrows(DataProcessingException.class, () -> productDao.delete(product.getProductId()));
 	}
-
 
 	@Test
 	public void testGetAllByAllFiltersFullNumberOfRecordsIsOne() throws SQLException, IOException {

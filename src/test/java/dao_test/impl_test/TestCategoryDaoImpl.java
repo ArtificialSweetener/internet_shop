@@ -134,9 +134,9 @@ public class TestCategoryDaoImpl { // done, add more test cases
 	}
 
 	@Test(expected = DataProcessingException.class)
-	public void testGetUserByIdThrowsException() throws SQLException {
+	public void testGetCategoryByIdThrowsException() throws SQLException {
 		Long invalidId = -1L;
-		String query = "SELECT * FROM colors WHERE id = ?";
+		String query = "SELECT * FROM category WHERE id = ?";
 		when(connectionPool.getConnection()).thenReturn(connection);
 		when(connection.prepareStatement(query)).thenReturn(statement);
 		doThrow(new SQLException()).when(statement).setLong(1, invalidId);
