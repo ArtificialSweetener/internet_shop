@@ -1,5 +1,5 @@
 # Internet Shop
-![Internet Shop](src/main/webapp/img/Internet shop.png)
+![shop](src/main/webapp/img/shop.png)
 
 ## Contents
 + [Overview](#Overview) 
