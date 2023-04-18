@@ -1,5 +1,5 @@
 # Internet Shop
-![internet_shop](img/Internet shop.png)
+![internet_shop](/MyInternetShop/src/main/webapp/img/Internet shop.png)
 
 ## Contents
 + [Overview](#Overview) 
@@ -70,7 +70,7 @@ Project implemented refers to an n-tier structure and has 4 layers:
 
 Table relations 
 
-![Table relations](img/database.png)
+![Table relations](/MyInternetShop/src/main/webapp/img/database.png)
 
 <a name="Application-startup"></a>
 ## Application startup
