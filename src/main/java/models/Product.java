@@ -197,7 +197,7 @@ public class Product implements Serializable {
 		if (obj == this) {
 			return true;
 		}
-		if (!(obj instanceof Product)) {
+		if (obj == null || this.getClass() != obj.getClass()) {
 			return false;
 		}
 		Product product = (Product) obj;

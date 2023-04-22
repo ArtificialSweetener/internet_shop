@@ -59,7 +59,7 @@ public class Color implements Serializable {
 	    if (obj == this) {
 	        return true;
 	    }
-	    if (!(obj instanceof Color)) {
+	    if (obj == null || this.getClass() != obj.getClass()) {
 	        return false;
 	    }
 	    Color other = (Color) obj;

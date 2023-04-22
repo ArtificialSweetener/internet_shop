@@ -60,10 +60,10 @@ public class UserSalt implements Serializable {
 	}
 	
 	  @Override
-	    public boolean equals(Object o) {
-	        if (o == this) return true;
-	        if (!(o instanceof UserSalt)) return false;
-	        UserSalt userSalt = (UserSalt) o;
+	    public boolean equals(Object obj) {
+	        if (obj == this) return true;
+	        if (obj == null || this.getClass() != obj.getClass()) return false;
+	        UserSalt userSalt = (UserSalt) obj;
 	        return Objects.equals(userSaltId, userSalt.userSaltId)
 	            && Objects.equals(userId, userSalt.userId)
 	            && Objects.equals(salt, userSalt.salt);

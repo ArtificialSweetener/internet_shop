@@ -81,10 +81,10 @@ public class Category implements Serializable {
 	}
 	
 	 @Override
-	    public boolean equals(Object o) {
-	        if (this == o) return true;
-	        if (!(o instanceof Category)) return false;
-	        Category category = (Category) o;
+	    public boolean equals(Object obj) {
+	        if (this == obj) return true;
+	        if (obj == null || this.getClass() != obj.getClass()) return false;
+	        Category category = (Category) obj;
 	        return getCategoryId() == category.getCategoryId() &&
 	                Objects.equals(getCategoryTitle(), category.getCategoryTitle()) &&
 	                Objects.equals(getCategoryDescription(), category.getCategoryDescription()) &&

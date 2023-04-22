@@ -115,7 +115,7 @@ public class User implements Serializable {
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;
-        if (!(obj instanceof User)) return false;
+        if (obj == null || this.getClass() != obj.getClass()) return false;
 
         User user = (User) obj;
 
