@@ -1,6 +1,7 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * The User class represents a user object that contains information about a
@@ -109,4 +110,26 @@ public class User implements Serializable {
 		return "User [userId=" + userId + ", userName=" + userName + ", userSurname=" + userSurname + ", userEmail="
 				+ userEmail + ", userPassword=" + userPassword + ", userType=" + userType + "]";
 	}
+	
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof User)) return false;
+
+        User user = (User) obj;
+
+        return Objects.equals(userId, user.userId)
+                && Objects.equals(userName, user.userName)
+                && Objects.equals(userSurname, user.userSurname)
+                && Objects.equals(userEmail, user.userEmail)
+                && Objects.equals(userPassword, user.userPassword)
+                && Objects.equals(userType, user.userType)
+                && is_bloked == user.is_bloked;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, userName, userSurname, userEmail, userPassword, userType, is_bloked);
+    }
 }

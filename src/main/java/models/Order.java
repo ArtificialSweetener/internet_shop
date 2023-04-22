@@ -3,6 +3,7 @@ package models;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 /**
  * The Order class represents an order made by a user. It contains information
@@ -96,4 +97,27 @@ public class Order implements Serializable {
 		this.orderStatus = orderStatus;
 	}
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Order)) {
+            return false;
+        }
+        Order order = (Order) obj;
+        return Objects.equals(id, order.id) &&
+               Objects.equals(userId, order.userId) &&
+               Objects.equals(orderDate, order.orderDate) &&
+               Objects.equals(orderTime, order.orderTime) &&
+               Objects.equals(orderAddress, order.orderAddress) &&
+               Objects.equals(orderPhone, order.orderPhone) &&
+               Objects.equals(orderStatus, order.orderStatus);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userId, orderDate, orderTime, orderAddress, orderPhone, orderStatus);
+    }
+    
 }

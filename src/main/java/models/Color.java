@@ -1,6 +1,7 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * The Color class represents a color entity, which has a unique identifier and
@@ -53,4 +54,20 @@ public class Color implements Serializable {
 		return "Color [colorId=" + colorId + ", colorName=" + colorName + "]";
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj == this) {
+	        return true;
+	    }
+	    if (!(obj instanceof Color)) {
+	        return false;
+	    }
+	    Color other = (Color) obj;
+	    return Objects.equals(colorId, other.colorId) && Objects.equals(colorName, other.colorName);
+	}
+
+	@Override
+	public int hashCode() {
+	    return Objects.hash(colorId, colorName);
+	}
 }

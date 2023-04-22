@@ -1,6 +1,7 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * UserSalt represents a user's salt, which is used in password hashing to add
@@ -57,5 +58,20 @@ public class UserSalt implements Serializable {
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
+	
+	  @Override
+	    public boolean equals(Object o) {
+	        if (o == this) return true;
+	        if (!(o instanceof UserSalt)) return false;
+	        UserSalt userSalt = (UserSalt) o;
+	        return Objects.equals(userSaltId, userSalt.userSaltId)
+	            && Objects.equals(userId, userSalt.userId)
+	            && Objects.equals(salt, userSalt.salt);
+	    }
+	    
+	    @Override
+	    public int hashCode() {
+	        return Objects.hash(userSaltId, userId, salt);
+	    }
 
 }

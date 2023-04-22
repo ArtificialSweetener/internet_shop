@@ -3,6 +3,7 @@ package models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The Category class represents a category of products in a simple e-commerce
@@ -78,5 +79,20 @@ public class Category implements Serializable {
 		return "Category [categoryId=" + categoryId + ", categoryTitle=" + categoryTitle + ", categoryDescription="
 				+ categoryDescription + "]";
 	}
+	
+	 @Override
+	    public boolean equals(Object o) {
+	        if (this == o) return true;
+	        if (!(o instanceof Category)) return false;
+	        Category category = (Category) o;
+	        return getCategoryId() == category.getCategoryId() &&
+	                Objects.equals(getCategoryTitle(), category.getCategoryTitle()) &&
+	                Objects.equals(getCategoryDescription(), category.getCategoryDescription()) &&
+	                Objects.equals(getProducts(), category.getProducts());
+	    }
 
+	    @Override
+	    public int hashCode() {
+	        return Objects.hash(getCategoryId(), getCategoryTitle(), getCategoryDescription(), getProducts());
+	    }
 }

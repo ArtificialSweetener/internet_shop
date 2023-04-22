@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * The Product class represents a product in the inventory of a store. It
@@ -177,6 +178,11 @@ public class Product implements Serializable {
 		this.isdeleted = isdeleted;
 	}
 
+	public LocalDateTime getDateTime() {
+		LocalDateTime fromDateAndTime = LocalDateTime.of(this.productDate, this.productTime);
+		return fromDateAndTime;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", productName=" + productName + ", productDescription="
@@ -186,9 +192,30 @@ public class Product implements Serializable {
 				+ ", productPhotoName=" + productPhotoName + "]";
 	}
 
-	public LocalDateTime getDateTime() {
-		LocalDateTime fromDateAndTime = LocalDateTime.of(this.productDate, this.productTime);
-		return fromDateAndTime;
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+		if (!(obj instanceof Product)) {
+			return false;
+		}
+		Product product = (Product) obj;
+		return Objects.equals(productId, product.productId) && Objects.equals(productName, product.productName)
+				&& Objects.equals(productDescription, product.productDescription)
+				&& Objects.equals(colorId, product.colorId) && Objects.equals(categoryId, product.categoryId)
+				&& Objects.equals(productPrice, product.productPrice)
+				&& Objects.equals(productQuantity, product.productQuantity)
+				&& Objects.equals(productDate, product.productDate) && Objects.equals(productTime, product.productTime)
+				&& Arrays.equals(productPhoto, product.productPhoto)
+				&& Objects.equals(productPhotoName, product.productPhotoName)
+				&& Objects.equals(isdeleted, product.isdeleted);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(productId, productName, productDescription, colorId, categoryId, productPrice,
+				productQuantity, productDate, productTime, productPhoto, productPhotoName, isdeleted);
 	}
 
 }

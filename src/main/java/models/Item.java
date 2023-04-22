@@ -1,6 +1,7 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * The Item class represents an item in an order. It contains information about
@@ -73,5 +74,18 @@ public class Item implements Serializable {
 	public void setItemPrice(double d) {
 		this.itemPrice = d;
 	}
+	
+	 @Override
+	    public boolean equals(Object o) {
+	        if (this == o) return true;
+	        if (o == null || getClass() != o.getClass()) return false;
+	        Item item = (Item) o;
+	        return Objects.equals(id, item.id) && Objects.equals(productId, item.productId) && Objects.equals(orderId, item.orderId) && Objects.equals(itemQuantity, item.itemQuantity) && Objects.equals(itemPrice, item.itemPrice);
+	    }
+
+	    @Override
+	    public int hashCode() {
+	        return Objects.hash(id, productId, orderId, itemQuantity, itemPrice);
+	    }
 
 }
