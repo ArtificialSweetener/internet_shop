@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao {
 	private static final Logger logger = LogManager.getLogger(UserDaoImpl.class);
 
 	public UserDaoImpl(ConnectionPool connectionPool) {
-		System.out.println("UserDaoImpl connection pool:" + connectionPool);
+		//logger.info("UserDaoImpl connection pool:" + connectionPool);
 		this.connectionPool = connectionPool;
 	}
 

@@ -101,7 +101,6 @@ public class AddToCartCommand implements ICommand {
 				} else {
 					cart = (Cart) cartOpt.get();
 					if (cart.containsProductById(productId)) {
-						System.out.println("we have this product already");
 						MessageAttributeUtil.setMessageAttribute(req, "message.prod_already_cart");
 						return targetUrl;
 					} else {
@@ -112,6 +111,7 @@ public class AddToCartCommand implements ICommand {
 					}
 				}
 			} catch (DataProcessingException e) {
+				logger.error("A DataProcessingException occurred while executing AddToCartCommand", e);
 				MessageAttributeUtil.setMessageAttribute(req, "message.add_prod_fail_cart_error");
 				return targetUrl;
 			}

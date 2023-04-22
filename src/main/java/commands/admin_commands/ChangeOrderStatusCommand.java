@@ -98,6 +98,7 @@ public class ChangeOrderStatusCommand implements ICommand {
 					return targetUrl;
 				}
 			} catch (DataProcessingException e) {
+				logger.error("A DataProcessingException occurred while executing ChangeOrderStatusCommand", e);
 				MessageAttributeUtil.setMessageAttribute(req, "message.change_status_fail_error");
 				return targetUrl;
 			}

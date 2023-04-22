@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import util.MessageAttributeUtil;
 
 /**
@@ -31,7 +34,7 @@ import util.MessageAttributeUtil;
  */
 //@WebFilter(urlPatterns = { "/common_pages/login.jsp", "/common_pages/register.jsp" })
 public class CommonPagesAccessFilter implements Filter {
-
+	private static final Logger logger = LogManager.getLogger(CommonPagesAccessFilter.class);
 	/**
 	 * Filters the request to check if a user accessing common pages is logged in or
 	 * not. If the user is logged in, the filter will redirect the user to their
@@ -52,25 +55,24 @@ public class CommonPagesAccessFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println("Common Access filter works");
+		logger.info("Common Access filter works");
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession(false);
 		String contextPath = req.getContextPath();
-
-		System.out.println("ContextPath is: " + contextPath);
-		System.out.println("Session is:  " + session);
+		logger.info("ContextPath is: " + contextPath);
+		logger.info("Session is:  " + session);
 
 		if (session != null) {
-			System.out.println("Session is not null");
+			logger.info("Session is not null");
 			if (session.getAttribute("role") != null) {
 				MessageAttributeUtil.setMessageAttribute(req, "message.access_denied_logout_first");
 				if (session.getAttribute("role").equals("normal")) {
-					System.out.println("Attribute is normal");
+					logger.info("Attribute is normal");
 					res.sendRedirect(contextPath + "/normal/normal.jsp");
 					return;
 				} else if (session.getAttribute("role").equals("admin")) {
-					System.out.println("Attribute is admin");
+					logger.info("Attribute is admin");
 					res.sendRedirect(contextPath + "/admin/admin.jsp");
 					return;
 				}

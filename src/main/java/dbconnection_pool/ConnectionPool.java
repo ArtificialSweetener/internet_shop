@@ -8,9 +8,6 @@ import java.sql.Connection;
  * 
  * The getConnection() method is used to obtain a connection from the pool.
  * 
- * The isValidConnection() method could be used to check if a connection is
- * still valid before it is returned to the pool.
- * 
  * The interface extends the AutoCloseable interface, which allows the
  * ConnectionPool object to be used in a try-with-resources statement.
  * 

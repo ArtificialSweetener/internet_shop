@@ -7,6 +7,9 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import exception.AuthentificationException;
 import models.User;
 import models.UserSalt;
@@ -17,7 +20,8 @@ import service.UserService;
 public class AuthentificationServiceImpl implements AuthentificationService {
 	private UserService userService;
 	private UserSaltService userSaltService;
-
+	private static final Logger logger = LogManager.getLogger(AuthentificationServiceImpl.class);
+	
 	public AuthentificationServiceImpl(UserService userService, UserSaltService userSaltService) {
 		super();
 		this.userService = userService;
@@ -26,18 +30,18 @@ public class AuthentificationServiceImpl implements AuthentificationService {
 
 	@Override
 	public User login(String email, String password) throws AuthentificationException {
-		System.out.println(email);
-		System.out.println(password);
-
+		
 		Optional<User> optionalUser = userService.findByEmail(email);
-
+		
 		if (optionalUser.isEmpty()) {
+			logger.error("AuthentificationException will be thrown while executing login() method of the AuthentificationServiceImpl class");
 			throw new AuthentificationException("Invalid user (can´t find user  by user email).");
 		} else {
 
 			Optional<UserSalt> storedSaltStringOpt = userSaltService.getSaltByUserId(optionalUser.get().getUserId());
 
 			if (storedSaltStringOpt.isEmpty()) {
+				logger.error("AuthentificationException will be thrown while executing login() method of the AuthentificationServiceImpl class");
 				throw new AuthentificationException("Invalid user (can´t find user salt by user id).");
 			} else {
 
@@ -54,18 +58,20 @@ public class AuthentificationServiceImpl implements AuthentificationService {
 				try {
 					loginMd = MessageDigest.getInstance("SHA-256");
 					loginMd.update(storedSalt);
+					
 					byte[] userHashedPassword = loginMd.digest(password.getBytes(StandardCharsets.UTF_8));
-					System.out.println(userHashedPassword);
-					System.out.println(storedHashedPassword);
+					
 					if (Arrays.equals(userHashedPassword, storedHashedPassword)) {
-						// login successful
+						logger.info("Login successful");
 						return optionalUser.get();
 					} else {
+						logger.info("Login failed");
+						logger.error("AuthentificationException will be thrown while executing login() method of the AuthentificationServiceImpl class");
 						throw new AuthentificationException("Wrong login or password");
-						// login failed
 					}
 				} catch (NoSuchAlgorithmException e) {
-					// TODO Auto-generated catch block
+					logger.error("NoSuchAlgorithmException was thrown while executing login() method of the AuthentificationServiceImpl class");
+					logger.error("AuthentificationException will be thrown while executing login() method of the AuthentificationServiceImpl class");
 					throw new AuthentificationException("Could not login due to NoSuchAlgorithmException" + e);
 				}
 			}

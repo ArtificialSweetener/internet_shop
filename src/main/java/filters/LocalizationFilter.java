@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Optional;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -61,7 +60,7 @@ public class LocalizationFilter implements Filter {
 		Optional<Object> langOpt = Optional.ofNullable(req.getSession().getAttribute("language"));
 		if (langOpt.isPresent()) {
 			String language = (langOpt.get()).toString();
-			System.out.println(language);
+			logger.info(language);
 			if (!language.equals("")) {
 				req.getSession().setAttribute("language", language);
 			} else {
@@ -74,11 +73,4 @@ public class LocalizationFilter implements Filter {
 		logger.info("LocalizationFilter ending");
 	}
 
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-	}
-
-	@Override
-	public void destroy() {
-	}
 }

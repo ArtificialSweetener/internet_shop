@@ -49,10 +49,10 @@ public class RegisterFormValidator implements FormValidator {
 	 */
 	@Override
 	public boolean validate(HttpServletRequest req) {
-		String userName = req.getParameter("user_name").trim();
-		String userSurname = req.getParameter("user_surname").trim();
-		String userEmail = req.getParameter("user_email").trim();
-		String userPassword = req.getParameter("user_password").trim();
+		String userName = req.getParameter("user_first_name").trim();
+		String userSurname = req.getParameter("user_last_name").trim();
+		String userEmail = req.getParameter("user_registration_email").trim();
+		String userPassword = req.getParameter("user_registration_password").trim();
 
 		boolean isValid = true;
 

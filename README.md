@@ -61,12 +61,12 @@ When you will log in as an admin, you will have the rights to:
 
 <a name="Project-structure"></a>
 ## Project structure
-Project implemented refers to an n-tier structure and has 4 layers:
+Project implemented refers to an n-tier structure and has 3 layers:
 
 1. Data access layer (DAO)
 1. Application layer (service)
 1. Presentation layer (Front Controller)
-1. View layer
+
 
 Table relations 
 

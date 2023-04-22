@@ -45,10 +45,8 @@ public class ChangeLanguageCommand implements ICommand {
 		System.out.println("ChangeLanguageCommand executed");
 		String changeToLanguage = req.getParameter("language");
 		Optional<Object> messageOpt = Optional.ofNullable(req.getSession().getAttribute("message"));
-
-		// String forward = req.getParameter("pageName");
 		String targetUrl = req.getParameter("pageName");
-		System.out.println(targetUrl);
+		logger.info(targetUrl);
 		if (changeToLanguage.equals("en")) {
 			req.getSession().setAttribute("language", "en");
 		} else if (changeToLanguage.equals("ua")) {
@@ -57,7 +55,7 @@ public class ChangeLanguageCommand implements ICommand {
 		if (messageOpt.isPresent()) {
 			String message = (String) messageOpt.get();
 			MessageAttributeUtil.setMessageAttribute(req, message);
-		}
+		} 
 		return targetUrl;
 	}
 }

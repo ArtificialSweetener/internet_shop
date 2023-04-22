@@ -26,7 +26,6 @@ public class WelcomePageCommand implements ICommand {
 
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		// TODO Auto-generated method stub
 		logger.info("Executing WelcomePageCommand");
 		return "/index.jsp";
 	}

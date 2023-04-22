@@ -40,7 +40,7 @@ public class ConnectionPoolContextListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 		ConnectionPool connectionPool = new ConnectionPoolImpl("java:comp/env/jdbc/testpool");
 		ConnectionPoolManager.getInstance().setConnectionPool(connectionPool);
-		System.out.println("Checking if connection pool gets initialized: "
+		logger.info("Connection pool gets initialized: "
 				+ ConnectionPoolManager.getInstance().getConnectionPool());
 	}
 

@@ -80,6 +80,7 @@ public class GetAllOrdersListCommand implements ICommand {
 				return targetUrl;
 			}
 		} catch (DataProcessingException e) {
+			logger.error("A DataProcessingException occurred while executing GetAllOrdersListCommand", e);
 			MessageAttributeUtil.setMessageAttribute(req, "message.order_list_error");
 			return "/admin/admin.jsp";
 		}

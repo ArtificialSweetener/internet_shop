@@ -41,6 +41,7 @@ public final class CommandFactory {
 			try {
 				iCommand = CommandEnum.valueOf(command).getCommand();
 			} catch (IllegalArgumentException e) {
+				logger.error("IllegalArgumentException while executing getCommand method of CommandFactory class");
 				e.printStackTrace();
 				iCommand = CommandEnum.ERROR_PAGE.getCommand();
 			}

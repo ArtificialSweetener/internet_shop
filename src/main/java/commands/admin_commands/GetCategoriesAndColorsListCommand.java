@@ -76,6 +76,7 @@ public class GetCategoriesAndColorsListCommand implements ICommand {
 			req.getSession().setAttribute("colorList", colorList);
 			return targetUrl;
 		} catch (DataProcessingException e) {
+			logger.error("A DataProcessingException occurred while executing GetCategoriesAndColorsListCommand", e);
 			MessageAttributeUtil.setMessageAttribute(req, "message.categories_and_colors_list_error");
 			return targetUrl_if_fail;
 		}

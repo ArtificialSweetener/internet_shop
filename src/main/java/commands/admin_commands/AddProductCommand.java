@@ -102,6 +102,7 @@ public class AddProductCommand implements ICommand {
 			productService.create(product);
 			MessageAttributeUtil.setMessageAttribute(req, "message.add_prod");
 		} catch (DataProcessingException | IOException | ServletException e) {
+			logger.error("A DataProcessingException occurred while executing AddProductCommand", e);
 			MessageAttributeUtil.setMessageAttribute(req, "message.add_prod_fail");
 			return targetUrl_if_fail;
 		}

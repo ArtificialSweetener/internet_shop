@@ -138,6 +138,7 @@ public class ChangeProductInfoCommand implements ICommand {
 				productService.update(product);
 				MessageAttributeUtil.setMessageAttribute(req, "message.product_updated");
 			} catch (DataProcessingException | IOException | ServletException e) {
+				logger.error("An exception occurred while executing ChangeProductInfoCommand", e);
 				MessageAttributeUtil.setMessageAttribute(req, "message.product_update_fail");
 				return targetUrl_if_fail;
 			}

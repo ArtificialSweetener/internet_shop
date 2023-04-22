@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import util.MessageAttributeUtil;
 
 /**
@@ -26,6 +29,7 @@ import util.MessageAttributeUtil;
  */
 //@WebFilter(urlPatterns = { "/normal/*" })
 public class NormalUserAccessFilter implements Filter {
+	private static final Logger logger = LogManager.getLogger(NormalUserAccessFilter.class);
 	/**
 	 * The doFilter method checks if the user accessing a specific URL has a
 	 * "normal" role. If the user does not have the "normal" role, the filter
@@ -44,23 +48,23 @@ public class NormalUserAccessFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println("Admin Access filter works");
+		logger.info("User Access filter works");
+
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession(false);
 
 		String contextPath = req.getContextPath();
-
-		System.out.println("ContextPath is: " + contextPath);
-		System.out.println("Session is:  " + session);
-		System.out.println("user Role is:  " + session.getAttribute("role"));
+		logger.info("ContextPath is: " + contextPath);
+		logger.info("Session is:  " + session);
+		logger.info("user Role is:  " + session.getAttribute("role"));
 
 		if (session != null) {
 			if (session.getAttribute("role") != null) {
 				if (!session.getAttribute("role").equals("normal")) {
 					session.invalidate();
 					session = req.getSession();
-					System.out.println("Session invalidated");
+					logger.info("Session invalidated");
 					MessageAttributeUtil.setMessageAttribute(req,
 							"message.access_denied_not_logged_in_as_a_regular_user");
 					res.sendRedirect(contextPath + "/common_pages/login.jsp");

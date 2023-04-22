@@ -2,6 +2,10 @@ package util.validators;
 
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 /**
  * The InputValidator class provides methods to validate different types of user
  * inputs such as name, email, password, number, country code, mobile phone,
@@ -41,6 +45,8 @@ public class InputValidator {
 
 	private static final String descriptionRegex = "^.{2,}$"; // done
 
+	private static final Logger logger = LogManager.getLogger(InputValidator.class);
+
 	public InputValidator() {
 	}
 
@@ -63,7 +69,7 @@ public class InputValidator {
 		if (Pattern.compile(nameRegex).matcher(name).matches()) {
 			return true;
 		} else
-			System.out.println("name not valid");
+			logger.info("name not valid");
 		return false;
 	}
 
@@ -77,7 +83,7 @@ public class InputValidator {
 		if (Pattern.compile(nameRegex).matcher(surname).matches()) {
 			return true;
 		} else
-			System.out.println("surname not valid");
+			logger.info("surname not valid");
 		return false;
 	}
 
@@ -91,7 +97,7 @@ public class InputValidator {
 		if (Pattern.compile(emailRegex).matcher(email).matches()) {
 			return true;
 		} else
-			System.out.println("email not valid");
+			logger.info("email not valid");
 		return false;
 	}
 
@@ -105,7 +111,7 @@ public class InputValidator {
 		if (Pattern.compile(passwordRegex).matcher(password).matches()) {
 			return true;
 		} else
-			System.out.println("password not valid");
+			logger.info("password not valid");
 		return false;
 	}
 
@@ -119,7 +125,7 @@ public class InputValidator {
 		if (Pattern.compile(numberRegex).matcher(number).matches()) {
 			return true;
 		} else
-			System.out.println("number not valid");
+			logger.info("number not valid");
 		return false;
 	}
 
@@ -134,7 +140,7 @@ public class InputValidator {
 		if (Pattern.compile(countryCodeRegex).matcher(code).matches()) {
 			return true;
 		} else
-			System.out.println("country code not valid");
+			logger.info("country code not valid");
 		return false;
 	}
 
@@ -149,7 +155,7 @@ public class InputValidator {
 		if (Pattern.compile(mobilePhoneRegex).matcher(phone).matches()) {
 			return true;
 		} else
-			System.out.println("mobile phone number not valid");
+			logger.info("mobile phone number not valid");
 		return false;
 	}
 
@@ -163,7 +169,7 @@ public class InputValidator {
 		if (Pattern.compile(addressRegex).matcher(address).matches()) {
 			return true;
 		} else
-			System.out.println("address not valid");
+			logger.info("address not valid");
 		return false;
 	}
 
@@ -178,7 +184,7 @@ public class InputValidator {
 		if (Pattern.compile(titleRegex).matcher(title).matches()) {
 			return true;
 		} else
-			System.out.println("Title not valid");
+			logger.info("Title not valid");
 		return false;
 	}
 
@@ -194,7 +200,7 @@ public class InputValidator {
 		if (Pattern.compile(descriptionRegex).matcher(desc).matches()) {
 			return true;
 		} else
-			System.out.println("Description not valid");
+			logger.info("Description not valid");
 		return false;
 	}
 
@@ -209,7 +215,7 @@ public class InputValidator {
 		if (Pattern.compile(priceRegex).matcher(productPrice).matches()) {
 			return true;
 		} else
-			System.out.println("product price not valid");
+			logger.info("product price not valid");
 		return false;
 	}
 

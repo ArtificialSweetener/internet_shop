@@ -80,6 +80,7 @@ public class UnblockUserCommand implements ICommand {
 					return targetUrl;
 				}
 			} catch (DataProcessingException e) {
+				logger.error("A DataProcessingException occurred while executing UnblockUserCommand", e);
 				MessageAttributeUtil.setMessageAttribute(req, "message.user_not_unblocked_error");
 				return targetUrl;
 			}

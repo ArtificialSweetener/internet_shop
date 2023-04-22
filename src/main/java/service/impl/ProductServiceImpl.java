@@ -58,19 +58,16 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public int getNoOfRecords() {
-		// TODO Auto-generated method stub
 		return productDao.getNoOfRecords();
 	}
 
 	public List<Product> getAllBy(String categoryId, String colorId, String min, String max, String sort,
 			int offset, int noOfRecords) {
-		// TODO Auto-generated method stub
 		return productDao.getAllBy(categoryId, colorId, min, max, sort, offset, noOfRecords);
 	}
 
 	@Override
 	public Optional<Product> getNoDeleteCheck(Long id) {
-		// TODO Auto-generated method stub
 		return productDao.getNoDeleteCheck(id);
 	}
 	

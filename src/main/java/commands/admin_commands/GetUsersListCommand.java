@@ -74,6 +74,7 @@ public class GetUsersListCommand implements ICommand {
 				return targetUrl;
 			}
 		} catch (DataProcessingException e) {
+			logger.error("A DataProcessingException occurred while executing GetUsersListCommand", e);
 			MessageAttributeUtil.setMessageAttribute(req, "message.user_list_error");
 			return targetUrl_if_fail;
 		}

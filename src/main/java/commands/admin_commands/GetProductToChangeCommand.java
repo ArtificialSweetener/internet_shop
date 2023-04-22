@@ -72,6 +72,7 @@ public class GetProductToChangeCommand implements ICommand {
 					return targetUrl_if_fail;
 				}
 			} catch (DataProcessingException e) {
+				logger.error("A DataProcessingException occurred while executing GetProductToChangeCommand", e);
 				MessageAttributeUtil.setMessageAttribute(req, "message.prod_info_error"); // refactor
 				return targetUrl_if_fail;
 			}

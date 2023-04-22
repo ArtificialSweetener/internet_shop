@@ -18,49 +18,41 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Order create(Order order) {
-		// TODO Auto-generated method stub
 		return orderDao.create(order);
 	}
 
 	@Override
 	public Optional<Order> get(Long id) {
-		// TODO Auto-generated method stub
 		return orderDao.get(id);
 	}
 
 	@Override
 	public List<Order> getAll() {
-		// TODO Auto-generated method stub
 		return orderDao.getAll();
 	}
 
 	@Override
 	public Order update(Order order) {
-		// TODO Auto-generated method stub
 		return orderDao.update(order);
 	}
 
 	@Override
 	public boolean delete(Long id) {
-		// TODO Auto-generated method stub
 		return orderDao.delete(id);
 	}
 
 	@Override
 	public List<Order> getAllOrdersByUserId(Long id, int offset, int noOfRecords) {
-		// TODO Auto-generated method stub
 		return orderDao.getAllOrdersByUserId(id, offset, noOfRecords);
 	}
 
 	@Override
 	public List<Order> getAll(int offset, int noOfRecords) {
-		// TODO Auto-generated method stub
 		return orderDao.getAll(offset, noOfRecords);
 	}
 
 	@Override
 	public int getNoOfRecords() {
-		// TODO Auto-generated method stub
 		return orderDao.getNoOfRecords();
 	}
 

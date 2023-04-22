@@ -93,6 +93,7 @@ public class GetUserOrdersListCommand implements ICommand {
 					return targetUrl;
 				}
 			} catch (DataProcessingException e) {
+				logger.error("DataProcessingException occurred while executing GetUserOrdersListCommand", e);
 				MessageAttributeUtil.setMessageAttribute(req, "message.order_list_error");
 				return targetUrl_if_fail;
 			}

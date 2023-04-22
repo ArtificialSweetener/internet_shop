@@ -35,7 +35,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
 		try {
 			context = new InitialContext();
 			dataSource = (DataSource) context.lookup(jndiName);
-			System.out.println("DataSource: " + dataSource);
+			logger.info("DataSource: " + dataSource);
 		} catch (NamingException e) {
 			throw new RuntimeException("Unable to get DataSource", e);
 		} finally {
@@ -43,7 +43,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
 				try {
 					context.close();
 				} catch (NamingException e) {
-					logger.error("???", e);// handle the exception
+					logger.error("NamingException occured while trying to close context in ConnectionPoolImpl constructor", e);// handle the exception
 				}
 			}
 		}
@@ -61,8 +61,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
 		try {
 			connection = dataSource.getConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("SQLException occured while trying to get connection", e);
 		}
 		return connection;
 	}

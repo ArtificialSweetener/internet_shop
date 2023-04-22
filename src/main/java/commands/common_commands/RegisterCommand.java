@@ -69,10 +69,10 @@ public class RegisterCommand implements ICommand {
 
 		String targetUrl = "/common_pages/register.jsp";
 
-		String userName = req.getParameter("user_name").trim();
-		String userSurname = req.getParameter("user_surname").trim();
-		String userEmail = req.getParameter("user_email").trim();
-		String userPassword = req.getParameter("user_password").trim();
+		String userName = req.getParameter("user_first_name").trim();
+		String userSurname = req.getParameter("user_last_name").trim();
+		String userEmail = req.getParameter("user_registration_email").trim();
+		String userPassword = req.getParameter("user_registration_password").trim();
 		String repeatPassword = req.getParameter("password-repeat").trim();
 
 		if (userName.isEmpty() || userSurname.isEmpty() || userEmail.isEmpty() || userPassword.isEmpty()
@@ -111,9 +111,11 @@ public class RegisterCommand implements ICommand {
 				userSaltService.create(userSalt);
 
 			} catch (NoSuchAlgorithmException e) {
+				logger.error("NoSuchAlgorithmException occurred while executing RegisterCommand", e);
 				MessageAttributeUtil.setMessageAttribute(req, "message.could_not_do_password_encryption");
 				return targetUrl;
 			} catch (DataProcessingException e) {
+				logger.error("DataProcessingException occurred while executing RegisterCommand", e);
 				MessageAttributeUtil.setMessageAttribute(req, "message.registration_fail");
 				return targetUrl;
 			}

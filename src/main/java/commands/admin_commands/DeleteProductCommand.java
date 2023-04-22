@@ -71,6 +71,7 @@ public class DeleteProductCommand implements ICommand {
 				MessageAttributeUtil.setMessageAttribute(req, "message.product_deleted");
 				return targetUrl;
 			} catch (DataProcessingException e) {
+				logger.error("A DataProcessingException occurred while executing DeleteProductCommand", e);
 				MessageAttributeUtil.setMessageAttribute(req, "message.prod_delete_fail_error");
 				return targetUrl;
 			}

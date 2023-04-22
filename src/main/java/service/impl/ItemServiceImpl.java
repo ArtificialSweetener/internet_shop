@@ -18,31 +18,26 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public Item create(Item item) {
-		// TODO Auto-generated method stub
 		return itemDao.create(item);
 	}
 
 	@Override
 	public Optional<Item> get(Long id) {
-		// TODO Auto-generated method stub
 		return itemDao.get(id);
 	}
 
 	@Override
 	public List<Item> getAll() {
-		// TODO Auto-generated method stub
 		return itemDao.getAll();
 	}
 
 	@Override
 	public Item update(Item item) {
-		// TODO Auto-generated method stub
 		return itemDao.update(item);
 	}
 
 	@Override
 	public boolean delete(Long id) {
-		// TODO Auto-generated method stub
 		return itemDao.delete(id);
 	}
 
@@ -53,13 +48,11 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public List<Item> getAllByOrderId(Long id, int offset, int noOfRecords) {
-		// TODO Auto-generated method stub
 		return itemDao.getAllByOrderId(id, offset, noOfRecords);
 	}
 
 	@Override
 	public int getNoOfRecords() {
-		// TODO Auto-generated method stub
 		return itemDao.getNoOfRecords();
 	}
 

@@ -70,6 +70,7 @@ public class AddCategoryCommand implements ICommand {
 			categoryService.create(category);
 			MessageAttributeUtil.setMessageAttribute(req, "message.add_cat");
 		} catch (DataProcessingException e) {
+			logger.error("A DataProcessingException occurred while executing AddCategoryCommand", e);
 			MessageAttributeUtil.setMessageAttribute(req, "message.add_cat_fail");
 			return targetUrl_if_fail;
 		}

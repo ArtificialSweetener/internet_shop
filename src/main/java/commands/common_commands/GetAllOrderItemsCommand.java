@@ -107,15 +107,15 @@ public class GetAllOrderItemsCommand implements ICommand {
 				req.getSession().setAttribute("noOfPagesAllItems", noOfPages);
 				req.getSession().setAttribute("currentPageAllItems", page);
 				req.getSession().setAttribute("totalOrderPrice", totalOrderPrice);
-				// System.out.println("Number of pages is: " + noOfPages);
-				// System.out.println("This page is:" + page);
 				return targetUrl;
 			}
 		} catch (DataProcessingException e) {
+			logger.error("A DataProcessingException occurred while executing GetAllOrderItemsCommand", e);
 			MessageAttributeUtil.setMessageAttribute(req, "message.order_items_error");
 			return targetUrl_fail;
 
 		} catch (URISyntaxException e) {
+			logger.error("A URISyntaxException occurred while executing GetAllOrderItemsCommand ", e);
 			MessageAttributeUtil.setMessageAttribute(req, "message.order_items_error");
 			return "/error_page.jsp";
 		}

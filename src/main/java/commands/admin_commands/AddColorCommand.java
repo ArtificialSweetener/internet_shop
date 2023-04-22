@@ -63,6 +63,7 @@ public class AddColorCommand implements ICommand {
 			colorService.create(color);
 			MessageAttributeUtil.setMessageAttribute(req, "message.add_col"); // done
 		} catch (DataProcessingException e) {
+			logger.error("A DataProcessingException occurred while executing AddColorCommand", e);
 			MessageAttributeUtil.setMessageAttribute(req, "message.add_col_fail"); // done
 		}
 		String targetUrl = "/admin/admin.jsp";

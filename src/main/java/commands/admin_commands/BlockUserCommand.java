@@ -72,6 +72,7 @@ public class BlockUserCommand implements ICommand {
 				MessageAttributeUtil.setMessageAttribute(req, "message.user_blocked");
 				req.getSession().setAttribute("noOfPagesAllUsers", noOfPages);
 			} catch (DataProcessingException e) {
+				logger.error("A DataProcessingException occurred while executing BlockUserCommand", e);
 				MessageAttributeUtil.setMessageAttribute(req, "message.user_not_blocked_error");
 				return targetUrl;
 			}

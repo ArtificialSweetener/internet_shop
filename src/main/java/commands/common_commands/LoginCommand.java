@@ -62,7 +62,6 @@ public class LoginCommand implements ICommand {
 	 */
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
-		System.out.println("Login Command works");
 		logger.info("Executing LoginCommand");
 		String email = req.getParameter("user_email");
 		String password = req.getParameter("user_password");
@@ -73,8 +72,9 @@ public class LoginCommand implements ICommand {
 		String targetUrl_if_fail = "common_pages/User type is not identified.jsp";
 		try {
 			user = authenticationService.login(email, password);
-			System.out.println("Found user: " + user);
+			logger.info("Found user: " + user);
 		} catch (AuthentificationException e) {
+			logger.error("An AuthentificationException occurred while executing LoginCommand", e);
 			MessageAttributeUtil.setMessageAttribute(req, "message.invalid_details_try_another");
 			return targetUrl_if_exception;
 		}
@@ -83,11 +83,11 @@ public class LoginCommand implements ICommand {
 		req.getSession().setAttribute("current_user", user);
 		if (user.getUserType().equals("admin")) {
 			req.getSession().setAttribute("role", "admin");
-			System.out.println("Admin role set with session: " + req.getSession());
+			logger.info("Admin role set with session: " + req.getSession());
 			return targetUrl_admin;
 		} else if (user.getUserType().equals("normal")) {
 			req.getSession().setAttribute("role", "normal");
-			System.out.println("Normal role set with session: " + req.getSession());
+			logger.info("Normal role set with session: " + req.getSession());
 			return targetUrl_user;
 		} else {
 			return targetUrl_if_fail;

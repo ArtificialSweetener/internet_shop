@@ -70,7 +70,7 @@ public class ResetFiltersCommand implements ICommand {
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing ResetFiltersCommand");
 		String targetUrl = "/common_pages/products.jsp";
-		// TODO Auto-generated method stub
+		
 		req.getSession().removeAttribute("sortOld");
 		req.getSession().removeAttribute("categoryOld");
 		req.getSession().removeAttribute("colorOld");
@@ -118,6 +118,7 @@ public class ResetFiltersCommand implements ICommand {
 				return targetUrl;
 			}
 		} catch (DataProcessingException | ClassCastException e) {
+			logger.error("An exception occurred while executing RegisterCommand", e);
 			MessageAttributeUtil.setMessageAttribute(req, "message.product_list_error");
 			return targetUrl;
 		}

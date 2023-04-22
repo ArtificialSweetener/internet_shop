@@ -43,11 +43,11 @@ public class FrontController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.info("Received GET request");
-		String forward = handleRequest(req, resp);
-		System.out.println(forward);
-		logger.debug("Forwarding to page: " + forward);
-		logger.debug("Returning view: " + forward);
-		resp.sendRedirect(req.getContextPath() + forward);
+		String redirect = handleRequest(req, resp);
+		logger.info("Received GET request");
+		logger.debug("Redirecting to page: " + redirect);
+		//logger.debug("Returning view: " + redirect);
+		resp.sendRedirect(req.getContextPath() + "/" + redirect);
 		// req.getRequestDispatcher(forward).forward(req, resp);
 	}
 
@@ -67,7 +67,6 @@ public class FrontController extends HttpServlet {
 		logger.info("Received POST request");
 		String redirect = handleRequest(req, resp);
 		logger.debug("Redirecting to page: " + redirect);
-		System.out.println(redirect);
 		resp.sendRedirect(req.getContextPath() + "/" + redirect);
 	}
 

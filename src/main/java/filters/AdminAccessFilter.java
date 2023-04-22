@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import util.MessageAttributeUtil;
 
 /**
@@ -28,6 +31,7 @@ import util.MessageAttributeUtil;
  */
 //@WebFilter(urlPatterns = { "/admin/*" })
 public class AdminAccessFilter implements Filter {
+	private static final Logger logger = LogManager.getLogger(AdminAccessFilter.class);
 
 	/**
 	 * Checks if the user accessing the admin area is an admin, if not invalidates
@@ -48,23 +52,23 @@ public class AdminAccessFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println("Admin Access filter works");
+		logger.info("Admin Access filter works");
+		
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession(false);
 
 		String contextPath = req.getContextPath();
-
-		System.out.println("ContextPath is: " + contextPath);
-		System.out.println("Session is:  " + session);
+		logger.info("ContextPath is: " + contextPath);
+		logger.info("Session is:  " + session);
 
 		if (session != null) {
 			if (session.getAttribute("role") != null) {
-				System.out.println("user Role is:  " + session.getAttribute("role"));
+				logger.info("user Role is:  " + session.getAttribute("role"));
 				if (!session.getAttribute("role").equals("admin")) {
 					session.invalidate();
 					session = req.getSession();
-					System.out.println("Session invalidated");
+					logger.info("Session invalidated");
 					MessageAttributeUtil.setMessageAttribute(req, "message.access_denied_not_an_admin");
 					res.sendRedirect(contextPath + "/common_pages/login.jsp");
 					return;

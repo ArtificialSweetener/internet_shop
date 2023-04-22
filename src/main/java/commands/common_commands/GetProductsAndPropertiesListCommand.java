@@ -188,11 +188,11 @@ public class GetProductsAndPropertiesListCommand implements ICommand {
 			sort = (String) sortOldOpt.get();
 		}
 
-		System.out.println("CategoryId is:" + categoryId);
-		System.out.println("ColorId is:" + colorId);
-		System.out.println("Min proce is:" + min);
-		System.out.println("Max proce is:" + max);
-		System.out.println("Sort criteria is:" + sort);
+		logger.info("CategoryId is:" + categoryId);
+		logger.info("ColorId is:" + colorId);
+		logger.info("Min proce is:" + min);
+		logger.info("Max proce is:" + max);
+		logger.info("Sort criteria is:" + sort);
 
 		try {
 			List<Product> productList = productService.getAllBy(categoryId, colorId, min, max, sort,
@@ -204,8 +204,6 @@ public class GetProductsAndPropertiesListCommand implements ICommand {
 			List<Color> colorList = colorService.getAll();
 			double productMinPrice = productService.getMinPrice();
 			double productMaxPrice = productService.getMaxPrice();
-
-			System.out.println(productList);
 
 			if (!productList.isEmpty()) {
 				req.getSession().setAttribute("productList", productList);
@@ -230,6 +228,7 @@ public class GetProductsAndPropertiesListCommand implements ICommand {
 				return targetUrl;
 			}
 		} catch (DataProcessingException | ClassCastException e) {
+			logger.error("An exception occurred while executing GetProductsAndPropertiesListCommand", e);
 			MessageAttributeUtil.setMessageAttribute(req, "message.product_list_error");
 			return targetUrl;
 		}

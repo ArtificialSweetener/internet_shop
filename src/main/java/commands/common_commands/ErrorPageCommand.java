@@ -30,7 +30,7 @@ public class ErrorPageCommand implements ICommand {
 	@Override
 	public String execute(HttpServletRequest req, HttpServletResponse resp) {
 		logger.info("Executing ErrorPageCommand");
-		String targetUrl = "/index.jsp";
+		String targetUrl = "/index.jsp"; //change to error page
 		return targetUrl;
 	}
 

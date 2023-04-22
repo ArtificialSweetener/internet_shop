@@ -26,7 +26,7 @@ import models.UserSalt;
 
 public class UserSaltDaoImpl implements UserSaltDao {
 	private ConnectionPool connectionPool;
-	private static final Logger logger = LogManager.getLogger(ItemDaoImpl.class);
+	private static final Logger logger = LogManager.getLogger(UserSaltDaoImpl.class);
 
 	public UserSaltDaoImpl(ConnectionPool connectionPool) {
 		super();
@@ -133,7 +133,6 @@ public class UserSaltDaoImpl implements UserSaltDao {
 			long user_id = resultSet.getLong("user_id");
 			String salt = resultSet.getString("user_salt");
 			userSalt = new UserSalt(id, user_id, salt);
-			System.out.println(userSalt);
 			logger.debug("Successfully got userSalt: {}", userSalt);
 		} catch (SQLException e) {
 			logger.error("Error while getting userSalt", e);

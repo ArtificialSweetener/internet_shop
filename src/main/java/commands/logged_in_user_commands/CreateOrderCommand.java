@@ -125,6 +125,7 @@ public class CreateOrderCommand implements ICommand {
 						MessageAttributeUtil.setMessageAttribute(req, "message.order_placed");
 						return targetUrl_if_success;
 					} catch (DataProcessingException e) {
+						logger.error("DataProcessingException occurred while executing CreateOrderCommand", e);
 						MessageAttributeUtil.setMessageAttribute(req, "message.order_not_placed_error");
 						return targetUrl_if_failure;
 					}
